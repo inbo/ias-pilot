@@ -1,13 +1,13 @@
-name: "my_dataset_title"
+name: "IAS subpilot: Monitoring invasive alien species with image-based methods"
 output_dir: "../docs"
 navbar:
-  title: "my_dataset_shortname"
+  title: "ias-pilot"
   left:
     - text: "Darwin Core mapping"
       href: dwc_mapping.html
   right:
     - icon: fa-github fa-lg
-      href: my_dataset_repository
+      href: https://github.com/trias-project/ias-pilot
 output:
   html_document:
     theme: yeti
