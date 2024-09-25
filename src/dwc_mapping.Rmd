@@ -15,3 +15,95 @@ output:
 
 This script prepares data for publication on [GBIF](https://www.gbif.org/). The script transforms the raw data to a [Darwin Core Archive](https://www.gbif.org/darwin-core) that can be harvested by GBIF. It was developed for the [Biodiversa+ pilot on invasive alien species monitoring](https://www.biodiversa.eu/2024/02/02/pilot-on-invasive-alien-species-monitoring-first-year-report/) project.
 
+# Setup 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r}
+library(here)
+library(DBI)
+library(duckdb)
+library(dplyr)
+library(readr)
+```
+## Load DuckDB files
+
+```{r}
+file_location <- here::here("data", "raw", "camalien.duckdb")
+con <- DBI::dbConnect(duckdb::duckdb(), dbdir = file_location, read_only = TRUE)
+
+detectionsummary <- DBI::dbGetQuery(con, "SELECT * FROM detectionsummary")
+detection <- DBI::dbGetQuery(con, "SELECT * FROM detection") %>% 
+  rename("detectionid" = "id")
+plantnetcall <- DBI::dbGetQuery(con, "SELECT * FROM plantnetcall") %>% 
+  dplyr::rename("callid" = "id")
+species <- DBI::dbGetQuery(con, "SELECT * FROM species") %>% 
+  dplyr::rename("speciesid" = "pnid")
+image <- DBI::dbGetQuery(con, "SELECT * FROM image") %>% 
+  dplyr::rename_with(
+    ~ paste0("image", .x),
+    c("id", "created", "filename", "path", "type")
+    )
+imagemeta <- DBI::dbGetQuery(con, "SELECT * FROM imagemeta") %>% 
+  dplyr::rename("imagemetaid" = "id") %>% 
+  dplyr::rename_with(~ paste0("image", .x), c("tag", "position", "timestamp"))
+chunk <- DBI::dbGetQuery(con, "SELECT * FROM chunk") %>% 
+  dplyr::rename("chunkid" = "id")
+job <- DBI::dbGetQuery(con, "SELECT * FROM job") %>% # not needed
+  dplyr::rename("jobid" = "id")
+partner <- DBI::dbGetQuery(con, "SELECT * FROM partner") %>% 
+  dplyr::rename(
+    "partnerid" = "id",
+    "partner" = "name")
+
+# not needed?
+plantnetcall_metadata <- 
+  DBI::dbGetQuery(con, "SELECT * FROM plantnetcall_metadata")
+plantnerrequestparams <- 
+  DBI::dbGetQuery(con, "SELECT * FROM plantnetrequestparams") %>% 
+  dplyr::rename("requestparamid" = "id")
+
+DBI::dbDisconnect(con)
+```
+
+## Load snapshot provided by Aarhus university
+
+```{r}
+file_location <- here::here("data", "raw", "detection_snapshot_20240809.csv")
+snapshot <- readr::read_csv(file_location, show_col_types = FALSE) %>% 
+  mutate(
+    imagetype = "tiff"
+    )
+```
+
+# Create camalien dataset
+
+```{r}
+camalien <- #imagetype is extra
+  dplyr::full_join(
+    detection, detectionsummary, by = c("callid", "speciesid")
+    ) %>% 
+  dplyr::full_join(plantnetcall, by = "callid") %>% 
+  dplyr::full_join(image, by = "imageid") %>% 
+  dplyr::full_join(imagemeta, by = "imagemetaid") %>% 
+  dplyr::full_join(chunk, by = "chunkid") %>% 
+  dplyr::full_join(job, by = "jobid") %>% 
+  dplyr::full_join(partner, by = "partnerid") %>% 
+  dplyr::full_join(species, by = "speciesid") %>% 
+  dplyr::select(
+    partner, imageid, imagecreated, imagefilename, imagepath, imagetype, imagetag, 
+    imageposition, imagetimestamp, velocity, altitude, callid, imageurl, 
+    detectionid, maxscore, sumscore, count, coverage, gbifid, speciesid, 
+    scientificname
+    ) %>% 
+  dplyr::rename("pnid" = "speciesid")
+```
+
+
+
+
+
