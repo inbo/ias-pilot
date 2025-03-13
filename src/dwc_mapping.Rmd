@@ -38,7 +38,7 @@ file_location <- here::here("data", "raw", "detectionsummary_belgium_20250310_sa
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
-Set project-level values:
+## Set project-level values:
 
 ```{r}
 license <- "CC0-1.0"
@@ -58,70 +58,52 @@ country_code = "BE"
 occurrence <-
   snapshot %>% 
   dplyr::mutate(
-      .keep = "none",
-      type = "Image",
-      license = "CC0-1.0",
-      rightsHolder = partner,
-      datasetID = "",
-      collectionCode = "camALIEN",
-      datasetName = dataset_name,
-      basisOfRecord = "MachineObservation",,
-      occurrenceID = .data$detectionsummaryid,
-      occurrenceStatus = "present",
-      eventID = .data$imagedataid,
-      #parentEventID = .data$deploymentID,
-      eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-      habitat = "riverine habitats",
-      samplingProtocol = "moving camera on vehicle",
-      # samplingEffort = paste(
-      #   format(.data$deploymentStart
-      
-      #, format = "%Y-%m-%dT%H:%M:%SZ"),
-      #   format(.data$deploymentEnd, format = "%Y-%m-%dT%H:%M:%SZ"),
-      #   sep = "/"
-      # ),
-      #eventRemarks = "x",
-      minimumDistanceAboveSurfaceInMeters = camera_height,
-      maximumDistanceAboveSurfaceInMeters = camera_height,
-      decimalLatitude = .data$latitude,
-      decimalLongitude = .data$longitude,
-      geodeticDatum = "EPSG:4326", # WGS84
-      #coordinateUncertaintyInMeters = .data$coordinateUncertainty,
-      dateIdentified = format(
-        .data$classificationTimestamp,
-        format = "%Y-%m-%dT%H:%M:%SZ"
-      ),
-      identificationRemarks = paste0(
-        # E.g. "classified by a machine with 89% certainty"
-        dplyr::if_else(
-          is.na(.data$classificationMethod),
-          "classified",
-          paste0("classified by a ", .data$classificationMethod)
-        ),
-        dplyr::if_else(
-          is.na(.data$classificationProbability),
-          "",
-          paste0(" with ", .data$classificationProbability * 100, "% certainty")
-        )
-      ),
-      taxonID = paste0("https://www.gbif.org/species/", .data$taxonID),
-      scientificName = .data$scientificName,
-      kingdom = "Plantae"
+    .keep = "none",
+    type = "Image",
+    license = license,
+    rightsHolder = rights_holder,
+    datasetID = "",
+    collectionCode = "camALIEN",
+    datasetName = dataset_name,
+    basisOfRecord = "MachineObservation",
+    occurrenceID = .data$detectionsummaryid,
+    occurrenceStatus = "present",
+    eventID = .data$imagedataid,
+    parentEventID = "", #.data$deploymentID,
+    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    habitat = habitat,
+    samplingProtocol = "moving camera on vehicle",
+    samplingEffort = "", #paste(
+    #   format(.data$deploymentStart
+    #, format = "%Y-%m-%dT%H:%M:%SZ"),
+    #   format(.data$deploymentEnd, format = "%Y-%m-%dT%H:%M:%SZ"),
+    #   sep = "/"
+    # ),
+    minimumDistanceAboveSurfaceInMeters = camera_height_m,
+    maximumDistanceAboveSurfaceInMeters = camera_height_m,
+    decimalLatitude = NA, #.data$latitude,
+    decimalLongitude = NA, #.data$longitude,
+    geodeticDatum = "EPSG:4326", # WGS84
+    coordinateUncertaintyInMeters = NA, #TODO: fill in
+    dateIdentified = format(
+      .data$detection_timestamp,
+      format = "%Y-%m-%dT%H:%M:%SZ"
+    ),
+    identificationRemarks = NA_character_,
+    taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificName = .data$scientificname,
+    kingdom = "Plantae"
+  ) %>%
+  dplyr::select(
+    "type", "license", "rightsHolder", "datasetID", "collectionCode",
+    "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
+    "eventID", "parentEventID", "eventDate", "habitat", "samplingProtocol", 
+    "samplingEffort", "minimumDistanceAboveSurfaceInMeters",
+    "maximumDistanceAboveSurfaceInMeters", "decimalLatitude", 
+    "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
+    "dateIdentified", "identificationRemarks", "taxonID", "scientificName", 
+    "kingdom"
   )
-    # ) %>%
-    # dplyr::select(
-    #   "type", "license", "rightsHolder", "datasetID", "collectionCode",
-    #   "datasetName", "basisOfRecord", "dataGeneralizations", "occurrenceID",
-    #   "individualCount", "sex", "lifeStage", "behavior", "occurrenceStatus",
-    #   "occurrenceRemarks", "organismID", "eventID", "parentEventID",
-    #   "eventDate", "habitat", "samplingProtocol", "samplingEffort",
-    #   "eventRemarks", "locationID", "locality", "minimumDepthInMeters",
-    #   "maximumDepthInMeters", "minimumDistanceAboveSurfaceInMeters",
-    #   "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
-    #   "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
-    #   "coordinatePrecision", "identifiedBy", "dateIdentified",
-    #   "identificationRemarks", "taxonID", "scientificName", "kingdom"
-    # )
 ```
 
 
