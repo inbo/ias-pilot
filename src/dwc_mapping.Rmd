@@ -106,46 +106,29 @@ occurrence <-
   )
 ```
 
+# Create Audubon/Audiovisual Media Description extension
 
 ```{r}
-  # Create Audubon/Audiovisual Media Description extension
   multimedia <-
     snapshot %>%
     dplyr::arrange(.data$deploymentID, .data$timestamp, .data$fileName) %>%
     dplyr::mutate(
       .keep = "none",
-      occurrenceID = .data$observationID,
-      identifier = .data$mediaID,
-      `dc:type` = dplyr::case_when(
-        grepl("video", .data$fileMediatype) ~ "MovingImage",
-        .default = "StillImage"
-      ),
-      comments = dplyr::case_when(
-        !is.na(favorite) & !is.na(mediaComments) ~
-          paste("marked as favorite", mediaComments, sep = " | "),
-        !is.na(favorite) ~ "marked as favorite",
-        .default = .data$mediaComments
-      ),
-      `dcterms:rights` = media_license,
-      CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-      captureDevice = .data$cameraModel,
-      resourceCreationTechnique = dplyr::recode(
-        .data$captureMethod,
-        "activityDetection" = "activity detection",
-        "timeLapse" = "time lapse"
-      ),
-      accessURI = .data$filePath,
-      `dc:format` = .data$fileMediatype,
-      serviceExpectation = dplyr::if_else(
-        as.logical(.data$filePublic),
-        "online",
-        "authenticate"
-      )
+      occurrenceID = .data$detectionsummaryid,
+      identifier = .data$imageddataid,
+      `dc:type` = "StillImage",
+      `dcterms:rights` = "CC-BY-4.0",
+      createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+      captureDevice = NA_character_, #TODO: fill
+      resourceCreationTechnique = "timelapse based on vehicle speed", #TODO: year-dependent
+      accessURI = .data$url,
+      `dc:format` = "image/jpeg", #TODO: year-dependent
+      serviceExpectation = "online"
     ) %>%
     dplyr::select(
-      "occurrenceID", "identifier", "dc:type", "comments", "dcterms:rights",
-      "CreateDate", "captureDevice", "resourceCreationTechnique", "accessURI",
-      "dc:format", "serviceExpectation",
+      "occurrenceID", "identifier", "dc:type", "dcterms:rights", "createDate",
+      "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
+      "serviceExpectation",
     )
 ```
 
