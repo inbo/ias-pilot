@@ -1,6 +1,6 @@
 ---
 title: "Darwin Core mapping"
-subtitle: "For: camALIEN"
+subtitle: "For: CamAlien"
 author:
 - Sanne Govaert
 date: "`r Sys.Date()`"
