@@ -109,27 +109,26 @@ occurrence <-
 # Create Audubon/Audiovisual Media Description extension
 
 ```{r}
-  multimedia <-
-    snapshot %>%
-    dplyr::arrange(.data$deploymentID, .data$timestamp, .data$fileName) %>%
-    dplyr::mutate(
-      .keep = "none",
-      occurrenceID = .data$detectionsummaryid,
-      identifier = .data$imageddataid,
-      `dc:type` = "StillImage",
-      `dcterms:rights` = "CC-BY-4.0",
-      createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-      captureDevice = NA_character_, #TODO: fill
-      resourceCreationTechnique = "timelapse based on vehicle speed", #TODO: year-dependent
-      accessURI = .data$url,
-      `dc:format` = "image/jpeg", #TODO: year-dependent
-      serviceExpectation = "online"
-    ) %>%
-    dplyr::select(
-      "occurrenceID", "identifier", "dc:type", "dcterms:rights", "createDate",
-      "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
-      "serviceExpectation",
-    )
+multimedia <-
+  snapshot %>%
+  dplyr::arrange(.data$timestamp) %>%
+  dplyr::mutate(
+    .keep = "none",
+    occurrenceID = .data$detectionsummaryid,
+    identifier = .data$imagedataid,
+    `dc:type` = "StillImage",
+    `dcterms:rights` = "CC-BY-4.0",
+    createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    captureDevice = NA_character_, # TODO: fill
+    resourceCreationTechnique = "timelapse based on vehicle speed", # TODO: year-dependent
+    accessURI = .data$url,
+    `dc:format` = "image/jpeg", # TODO: year-dependent
+    serviceExpectation = "online"
+  ) %>%
+  dplyr::select(
+    "occurrenceID", "identifier", "dc:type", "dcterms:rights", "createDate",
+    "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
+    "serviceExpectation",
+  )
 ```
-
-
+`
