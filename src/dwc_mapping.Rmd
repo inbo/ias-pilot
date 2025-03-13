@@ -131,4 +131,14 @@ multimedia <-
     "serviceExpectation",
   )
 ```
-`
+
+# Write files
+
+```{r}
+directory <- here::here("data", "processed", country_code)
+if (!dir.exists(directory)) {
+    dir.create(directory, recursive = TRUE)
+  }
+readr::write_csv(occurrence, file.path(directory, "occurrence.csv"), na = "")
+readr::write_csv(multimedia, file.path(directory, "multimedia.csv"), na = "")
+```
