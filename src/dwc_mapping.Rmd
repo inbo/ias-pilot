@@ -38,6 +38,17 @@ file_location <- here::here("data", "raw", "detectionsummary_belgium_20250310_sa
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
+Set project-level values:
+
+```{r}
+license <- "CC0-1.0"
+rights_holder <- "INBO"
+dataset_name <- "Biodiversa+ IAS pilot - CamAlien observations of alien plant species in Flanders (Belgium)"
+habitat <- "Riverine habitats"
+camera_height_m <- 1.7
+country_code = "BE"
+```
+
 
 # Create dwc
 
