@@ -65,7 +65,7 @@ occurrence <-
     license = metadata$license_data,
     rightsHolder = metadata$rights_holder,
     datasetID = "",
-    collectionCode = "CamALIEN",
+    collectionCode = "CamAlien",
     datasetName = metadata$title,
     basisOfRecord = "MachineObservation",
     occurrenceID = .data$detectionsummaryid,
