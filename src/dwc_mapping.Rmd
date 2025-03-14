@@ -29,6 +29,7 @@ library(DBI)
 library(duckdb)
 library(dplyr)
 library(readr)
+library(tidyverse)
 ```
 
 ## Load snapshot provided by Aarhus university
@@ -38,15 +39,16 @@ file_location <- here::here("data", "raw", "detectionsummary_belgium_20250310_sa
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
-## Set project-level values:
+## Import project-level data
 
 ```{r}
-license <- "CC0-1.0"
-rights_holder <- "INBO"
-dataset_name <- "Biodiversa+ IAS pilot - CamAlien observations of alien plant species in Flanders (Belgium)"
-habitat <- "Riverine habitats"
-camera_height_m <- 1.7
-country_code = "BE"
+project_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) %>% 
+  dplyr::select(term, value) %>% 
+  tidyr::pivot_wider(names_from = term, values_from = value)
+metadata <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=0&single=true&output=csv", show_col_types = FALSE) %>% 
+  dplyr::select(term, value) %>% 
+  tidyr::pivot_wider(names_from = term, values_from = value)
+contacts <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
 ```
 
 
@@ -60,18 +62,18 @@ occurrence <-
   dplyr::mutate(
     .keep = "none",
     type = "Image",
-    license = license,
-    rightsHolder = rights_holder,
+    license = metadata$license_data,
+    rightsHolder = metadata$rights_holder,
     datasetID = "",
-    collectionCode = "camALIEN",
-    datasetName = dataset_name,
+    collectionCode = "CamALIEN",
+    datasetName = metadata$title,
     basisOfRecord = "MachineObservation",
     occurrenceID = .data$detectionsummaryid,
     occurrenceStatus = "present",
     eventID = .data$imagedataid,
     parentEventID = "", #.data$deploymentID,
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-    habitat = habitat,
+    habitat = metadata$habitat,
     samplingProtocol = "moving camera on vehicle",
     samplingEffort = "", #paste(
     #   format(.data$deploymentStart
@@ -79,8 +81,8 @@ occurrence <-
     #   format(.data$deploymentEnd, format = "%Y-%m-%dT%H:%M:%SZ"),
     #   sep = "/"
     # ),
-    minimumDistanceAboveSurfaceInMeters = camera_height_m,
-    maximumDistanceAboveSurfaceInMeters = camera_height_m,
+    minimumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
+    maximumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
     decimalLatitude = NA, #.data$latitude,
     decimalLongitude = NA, #.data$longitude,
     geodeticDatum = "EPSG:4326", # WGS84
@@ -119,7 +121,7 @@ multimedia <-
     `dc:type` = "StillImage",
     `dcterms:rights` = "CC-BY-4.0",
     createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-    captureDevice = NA_character_, # TODO: fill
+    captureDevice = NA_character_, # TODO: fill in
     resourceCreationTechnique = "timelapse based on vehicle speed", # TODO: year-dependent
     accessURI = .data$url,
     `dc:format` = "image/jpeg", # TODO: year-dependent
@@ -135,7 +137,7 @@ multimedia <-
 # Write files
 
 ```{r}
-directory <- here::here("data", "processed", country_code)
+directory <- here::here("data", "processed", metadata$country_code)
 if (!dir.exists(directory)) {
     dir.create(directory, recursive = TRUE)
   }
