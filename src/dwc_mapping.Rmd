@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 ## Load libraries
 
-```{r}
+```{r load libraries}
 library(here)
 library(DBI)
 library(duckdb)
@@ -34,14 +34,14 @@ library(tidyverse)
 
 ## Load snapshot provided by Aarhus university
 
-```{r}
+```{r import data}
 file_location <- here::here("data", "raw", "detectionsummary_belgium_20250310_sample.csv")
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
 ## Import project-level data
 
-```{r}
+```{r import google sheets}
 project_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) %>% 
   dplyr::select(term, value) %>% 
   tidyr::pivot_wider(names_from = term, values_from = value)
@@ -54,9 +54,9 @@ contacts <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1T
 
 # Create dwc
 
-# Create occurrence
+## Create occurrence
 
-```{r}
+```{r occurrence}
 occurrence <-
   snapshot %>% 
   dplyr::mutate(
@@ -108,9 +108,9 @@ occurrence <-
   )
 ```
 
-# Create Audubon/Audiovisual Media Description extension
+## Create Audubon/Audiovisual Media Description extension
 
-```{r}
+```{r multimedia}
 multimedia <-
   snapshot %>%
   dplyr::arrange(.data$timestamp) %>%
@@ -136,7 +136,7 @@ multimedia <-
 
 # Write files
 
-```{r}
+```{r write files}
 directory <- here::here("data", "processed", metadata$country_code)
 if (!dir.exists(directory)) {
     dir.create(directory, recursive = TRUE)
