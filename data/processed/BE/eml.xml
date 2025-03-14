@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="a441d5c9-b1cc-4028-8dce-520b55e56a47" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+  <dataset>
+    <shortName>iaspilot_belgium</shortName>
+    <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
+    <creator>
+      <individualName>
+        <givenName>Bram</givenName>
+        <surName>D'hondt</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Sanne</givenName>
+        <surName>Govaert</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>sanne.govaert@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
+    </creator>
+    <metadataProvider>
+      <individualName>
+        <givenName>Bram</givenName>
+        <surName>D'hondt</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+    </metadataProvider>
+    <metadataProvider>
+      <individualName>
+        <givenName>Sanne</givenName>
+        <surName>Govaert</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>sanne.govaert@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
+    </metadataProvider>
+    <abstract>
+      <para>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium is an occurrence dataset published by the Research Institute of Nature and Forest (INBO). It is part of  [...].Data have been standardized to Darwin Core. Issues with the dataset can be rerported at https://github.com/inbo/ias-pilot/issues</para>
+    </abstract>
+    <keywordSet>
+      <keyword>Occurrence</keyword>
+      <keywordThesaurus>GBIF Dataset Type Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml</keywordThesaurus>
+    </keywordSet>
+    <keywordSet>
+      <keyword>Observation</keyword>
+      <keywordThesaurus>GBIF Dataset Subtype Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml</keywordThesaurus>
+    </keywordSet>
+    <keywordSet>
+      <keyword>camAlien, invasive alien species</keyword>
+      <keywordThesaurus>n/a</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <para>CC0-1.0</para>
+    </intellectualRights>
+    <maintenance>
+      <description>
+        <para/>
+      </description>
+      <maintenanceUpdateFrequency>Unknown</maintenanceUpdateFrequency>
+    </maintenance>
+    <contact>
+      <individualName>
+        <givenName>Bram</givenName>
+        <surName>D'hondt</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+    </contact>
+    <project>
+      <title>Biodiversa+ Biodiversity Monitoring Pilot Invasive Alien Species</title>
+      <personnel>
+        <individualName>
+          <givenName>Sanne</givenName>
+          <surName>Govaert</surName>
+        </individualName>
+        <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+        <electronicMailAddress>sanne.govaert@inbo.be</electronicMailAddress>
+        <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
+      </personnel>
+      <abstract>
+        <para>Project description</para>
+      </abstract>
+      <funding>
+        <para>Biodiversa+</para>
+      </funding>
+      <studyAreaDescription>
+        <descriptor>
+          <descriptorValue>Europe</descriptorValue>
+        </descriptor>
+      </studyAreaDescription>
+      <designDescription>
+        <description>
+          <para>My design description</para>
+        </description>
+      </designDescription>
+    </project>
+  </dataset>
+</eml:eml>
