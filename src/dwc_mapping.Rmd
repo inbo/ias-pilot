@@ -213,7 +213,7 @@ eml <- list(
 eml$dataset$project$title <- project$title
 eml$dataset$project$abstract$para <- project$description
 eml$dataset$project$funding$para <- project$funding
-eml$dataset$project$studyAreaDescription$descriptor$descriptorValue <- 
+eml$dataset$project$studyAreaDescription$descriptor$descriptorValue <-
   project$study_area_description
 eml$dataset$project$designDescription$description$para <- 
   project$design_description
@@ -312,3 +312,10 @@ readr::write_csv(occurrence, file.path(dir_export, "occurrence.csv"), na = "")
 readr::write_csv(multimedia, file.path(dir_export, "multimedia.csv"), na = "")
 EML::write_eml(eml, file.path(dir_export, "eml.xml"))
 ```
+
+# Validate EML
+
+```{r}
+EML::eml_validate(file.path(dir_export, "eml.xml"))
+```
+
