@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="a441d5c9-b1cc-4028-8dce-520b55e56a47" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="44412174-0466-465a-b1a9-1d9174df672c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>iaspilot_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
@@ -51,7 +51,7 @@
       <keywordThesaurus>GBIF Dataset Subtype Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml</keywordThesaurus>
     </keywordSet>
     <keywordSet>
-      <keyword>camAlien, invasive alien species</keyword>
+      <keyword>CamAlien, invasive alien species</keyword>
       <keywordThesaurus>n/a</keywordThesaurus>
     </keywordSet>
     <intellectualRights>
@@ -61,7 +61,7 @@
       <description>
         <para/>
       </description>
-      <maintenanceUpdateFrequency>Unknown</maintenanceUpdateFrequency>
+      <maintenanceUpdateFrequency>unknown</maintenanceUpdateFrequency>
     </maintenance>
     <contact>
       <individualName>
