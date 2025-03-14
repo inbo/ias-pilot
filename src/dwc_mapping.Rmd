@@ -42,13 +42,57 @@ snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";"
 ## Import project-level data
 
 ```{r import google sheets}
-project_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) %>% 
+project_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) 
+metadata_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=0&single=true&output=csv", show_col_types = FALSE)
+creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
+```
+
+## Prepare project-level data
+
+```{r}
+project <-
+  project_raw %>% 
   dplyr::select(term, value) %>% 
   tidyr::pivot_wider(names_from = term, values_from = value)
-metadata <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=0&single=true&output=csv", show_col_types = FALSE) %>% 
+metadata <- 
+  metadata_raw %>% 
   dplyr::select(term, value) %>% 
   tidyr::pivot_wider(names_from = term, values_from = value)
-contacts <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
+creators <-
+  creators_raw %>% 
+  dplyr::arrange(order) %>% 
+  dplyr::mutate(title = paste(first_name, last_name))
+creators_list <- purrr::map(1:nrow(creators), function(i) {
+  list(
+    title = creators$title[i],
+    first_name = creators$first_name[i],
+    last_name = creators$last_name[i],
+    organization = creators$organization[i],
+    country = creators$country[i],
+    email = creators$email[i],
+    orcid = creators$orcid[i]
+  )
+})
+
+metadata_provider_names <- 
+  creators %>% 
+  dplyr::filter(metadata_provider == TRUE) %>%
+  dplyr::pull(title)
+metadata_provider <- 
+  purrr::keep(creators_list, ~ .x$title %in% metadata_provider_names)
+
+contact_names <- 
+  creators %>% 
+  dplyr::filter(contact == TRUE) %>%
+  dplyr::pull(title)
+contact <- purrr::keep(creators_list, ~ .x$title %in% contact_names)
+
+project_personnel_names <- 
+  creators %>% 
+  dplyr::filter(project_personnel == TRUE) %>% 
+  dplyr::pull(title)
+project_personnel <- 
+  purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
 ```
 
 
@@ -134,13 +178,137 @@ multimedia <-
   )
 ```
 
+# Create metadata file (eml.xml)
+
+## Function to create contributors in EML format
+
+```{r}
+create_eml_contributors <- function(contributor_list) {
+  purrr::map(contributor_list, ~ EML::set_responsibleParty(
+    givenName = .$first_name,
+    surName = .$last_name,
+    organizationName = .$organization, # Discouraged by EML, but used by IPT
+    email = .$email,
+    userId = if (!is.na(.$orcid)) {
+      list(directory = "https://orcid.org/", .$orcid)
+    } else {
+      NULL
+    }
+  ))
+}
+```
+
+This script is based on input data above.
+
+```{r EML initiation}
+# Initiate EML
+eml <- list(
+  packageId = uuid::UUIDgenerate(),
+  system = "uuid",
+  dataset = list()
+)
+```
+
+```{r EML project}
+eml$dataset$project$title <- project$title
+eml$dataset$project$abstract$para <- project$description
+eml$dataset$project$funding$para <- project$funding
+eml$dataset$project$studyAreaDescription$descriptor$descriptorValue <- 
+  project$study_area_description
+eml$dataset$project$designDescription$description$para <- 
+  project$design_description
+eml$dataset$project$personnel <- create_eml_contributors(project_personnel)
+```
+
+```{r EML dataset}
+# Set short name and title
+eml$dataset$shortName <- metadata$short_name
+eml$dataset$title <- metadata$title
+
+# Set abstract
+eml$dataset$abstract$para <- metadata$description
+
+# Set update frequency (requires a description, even if empty)
+eml$dataset$maintenance <- list(
+  description = list(para = ""),
+  maintenanceUpdateFrequency = metadata$update_frequency
+)
+
+# Set creators
+eml$dataset$creator <- create_eml_contributors(creators_list)
+
+# Set contacts
+eml$dataset$contact <- create_eml_contributors(contact)
+
+# Set metadata providers
+eml$dataset$metadataProvider <- create_eml_contributors(metadata_provider)
+
+# Set keywords
+eml$dataset$keywordSet <-
+  list(
+    list(
+      keywordThesaurus = paste(
+        "GBIF Dataset Type Vocabulary:",
+        "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
+      ),
+      keyword = "Occurrence"
+    ),
+    list(
+        keywordThesaurus = paste(
+          "GBIF Dataset Subtype Vocabulary:",
+          "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
+        ),
+        keyword = "Observation"
+      ),
+    list(
+      keywordThesaurus = "n/a",
+      keyword = metadata$keywords
+    )
+  )
+
+# Set license
+eml$dataset$intellectualRights$para <- metadata$license_data
+
+# # Set temporal and geographic coverage and geographicDescription
+# eml$dataset$coverage <-
+#   EML::set_coverage(
+#     beginDate = begin_date,
+#     endDate = end_date,
+#     geographicDescription = geographic_description,
+#     westBoundingCoordinate = min(event$decimalLongitude),
+#     southBoundingCoordinate = min(event$decimalLatitude),
+#     eastBoundingCoordinate = max(event$decimalLongitude),
+#     northBoundingCoordinate = max(event$decimalLatitude)
+#   )
+# 
+# # Set taxonomic coverage
+# eml$dataset$coverage$taxonomicCoverage <-
+#   list(
+#     taxonomicClassification =
+#       purrr::map(1:nrow(taxonomic_coverage), function(i) {
+#         current_row <- taxonomic_coverage[i, ]
+#         list(
+#           taxonRankName = current_row$taxonRank,
+#           taxonRankValue = current_row$scientificName
+#         )
+#       })
+#   )
+eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- metadata$taxonomic_description
+```
+
+```{r EML additional metadata}
+# Bibliographic citations
+#eml$additionalMetadata$metadata$gbif$bibliography$citation <- references
+```
+
 # Write files
 
 ```{r write files}
-directory <- here::here("data", "processed", metadata$country_code)
-if (!dir.exists(directory)) {
-    dir.create(directory, recursive = TRUE)
+dir_export <- here::here("data", "processed", metadata$country_code)
+if (!dir.exists(dir_export)) {
+    dir.create(dir_export, recursive = TRUE)
   }
-readr::write_csv(occurrence, file.path(directory, "occurrence.csv"), na = "")
-readr::write_csv(multimedia, file.path(directory, "multimedia.csv"), na = "")
+readr::write_csv(occurrence, file.path(dir_export, "occurrence.csv"), na = "")
+readr::write_csv(multimedia, file.path(dir_export, "multimedia.csv"), na = "")
+EML::write_eml(eml, file.path(dir_export, "eml.xml"))
 ```
