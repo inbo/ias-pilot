@@ -226,7 +226,13 @@ eml$dataset$shortName <- metadata$short_name
 eml$dataset$title <- metadata$title
 
 # Set abstract
-eml$dataset$abstract$para <- metadata$description
+eml$dataset$abstract$para <- 
+  c(
+    metadata$description_paragraph1,
+    metadata$description_paragraph2,
+    metadata$description_paragraph3,
+    metadata$description_paragraph4
+    )
 
 # Set update frequency (requires a description, even if empty)
 eml$dataset$maintenance <- list(

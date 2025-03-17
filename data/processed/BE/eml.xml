@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="44412174-0466-465a-b1a9-1d9174df672c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="324260a5-39fc-4c46-9ac0-5a58d006848c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
-    <shortName>iaspilot_belgium</shortName>
+    <shortName>iaspilot_camalien_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
     <creator>
       <individualName>
@@ -40,7 +40,9 @@
       <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
     </metadataProvider>
     <abstract>
-      <para>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium is an occurrence dataset published by the Research Institute of Nature and Forest (INBO). It is part of  [...].Data have been standardized to Darwin Core. Issues with the dataset can be rerported at https://github.com/inbo/ias-pilot/issues</para>
+      <para>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium is an occurrence dataset publiched by Research Institute for Nature and Forest (INBO). [Example; replace] It is part of the Meetnetten.be suite of monitoring networks for priority species in Flanders, in which data are collected at fixed locations using a standardized protocol (https://meetnetten.be). This dataset contains site counts for 1 priority species (Triturus cristatus), as well as other amphibians observed during sampling. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
+      <para>We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</para>
+      <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa +, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
     </abstract>
     <keywordSet>
       <keyword>Occurrence</keyword>
