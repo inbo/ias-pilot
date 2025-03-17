@@ -47,7 +47,7 @@ metadata_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3L
 creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
 ```
 
-## Prepare project-level data
+## Prepare project-level (meta)data
 
 ```{r}
 project <-
@@ -95,6 +95,28 @@ project_personnel <-
   purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
 ```
 
+## Prepare data
+
+```{r}
+snapshot <-
+  snapshot %>% 
+  dplyr::mutate(
+    timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
+    year = format(.data$timestamp_date, format = "%Y"),
+    deploymentID = paste(metadata$country_code, timestamp_date, sep = "_")
+  )
+deployments <-
+  snapshot %>% 
+  dplyr::group_by(deploymentID) %>% 
+  summarise(
+    deployment_start = min(.data$timestamp),
+    deployment_end = max(.data$timestamp)
+  )
+snapshot <-
+  snapshot %>%
+  dplyr::left_join(deployments)
+```
+
 
 # Create dwc
 
@@ -115,16 +137,15 @@ occurrence <-
     occurrenceID = .data$detectionsummaryid,
     occurrenceStatus = "present",
     eventID = .data$imagedataid,
-    parentEventID = "", #.data$deploymentID,
-    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    parentEventID = .data$deploymentID,
+    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"), #TODO: check time zones
     habitat = metadata$habitat,
     samplingProtocol = "moving camera on vehicle",
-    samplingEffort = "", #paste(
-    #   format(.data$deploymentStart
-    #, format = "%Y-%m-%dT%H:%M:%SZ"),
-    #   format(.data$deploymentEnd, format = "%Y-%m-%dT%H:%M:%SZ"),
-    #   sep = "/"
-    # ),
+    samplingEffort = paste(
+      format(.data$deployment_start, format = "%Y-%m-%dT%H:%M:%SZ"),
+      format(.data$deployment_end, format = "%Y-%m-%dT%H:%M:%SZ"),
+      sep = "/"
+    ),
     minimumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
     maximumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
     decimalLatitude = NA, #.data$latitude,
@@ -135,7 +156,7 @@ occurrence <-
       .data$detection_timestamp,
       format = "%Y-%m-%dT%H:%M:%SZ"
     ),
-    identificationRemarks = NA_character_,
+    identificationRemarks = NA_character_, #TODO: fill in
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
@@ -166,7 +187,11 @@ multimedia <-
     `dcterms:rights` = "CC-BY-4.0",
     createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     captureDevice = NA_character_, # TODO: fill in
-    resourceCreationTechnique = "timelapse based on vehicle speed", # TODO: year-dependent
+    resourceCreationTechnique = dplyr::if_else(
+      .data$year == 2024,
+      "fixed sampling rate",
+      "timelapse based on vehicle speed"
+      ),
     accessURI = .data$url,
     `dc:format` = "image/jpeg", # TODO: year-dependent
     serviceExpectation = "online"
@@ -292,7 +317,6 @@ taxonomic_coverage <- data.frame(
   scientificName = "Plantae",
   taxonRank = "kingdom"
 )
-  
 eml$dataset$coverage$taxonomicCoverage <-
   list(
     taxonomicClassification =
