@@ -334,34 +334,14 @@ eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- metadata$taxo
 eml$dataset$methods$sampling$samplingDescription$para <- metadata$sampling_description #TODO: does not work yet
 eml$dataset$methods$sampling$studyExtent$description$para <- metadata$study_extent #TODO: does not work yet
 eml$dataset$methods$qualityControl$description$para <- metadata$quality_control #TODO: does not work yet
-method_steps <- data.frame(
-  method_step = na.omit(c(
-    metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
-    metadata$step_5, metadata$step_6, metadata$step_7
-  ))
-)
-eml$dataset$methods <- list(
-    methodStep =
-      purrr::map(1:nrow(method_steps), function(i) {
-        current_row <- method_steps[i, ]
-        list(
-          description = list(para = current_row)
-        )
-      })
-  )
 
-# method_steps <- na.omit(c(
-#   metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
-#   metadata$step_5, metadata$step_6, metadata$step_7
-# ))
-# 
-# eml$dataset$methods <- list(
-#   methodStep =
-#     purrr::map(
-#       method_steps,
-#       ~ list(desciption = list(para = .x))
-#     )
-# )
+method_steps <- na.omit(c(
+  metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
+  metadata$step_5, metadata$step_6, metadata$step_7
+))
+eml$dataset$methods <- list(
+  methodStep = purrr::map(method_steps, ~ list(description = list(para = .x)))
+)
 ```
 
 ```{r EML additional metadata}
