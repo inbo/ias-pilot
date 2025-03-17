@@ -275,30 +275,35 @@ eml$dataset$keywordSet <-
 # Set license
 eml$dataset$intellectualRights$para <- metadata$license_data
 
-# # Set temporal and geographic coverage and geographicDescription
-# eml$dataset$coverage <-
-#   EML::set_coverage(
-#     beginDate = begin_date,
-#     endDate = end_date,
-#     geographicDescription = geographic_description,
-#     westBoundingCoordinate = min(event$decimalLongitude),
-#     southBoundingCoordinate = min(event$decimalLatitude),
-#     eastBoundingCoordinate = max(event$decimalLongitude),
-#     northBoundingCoordinate = max(event$decimalLatitude)
-#   )
-# 
-# # Set taxonomic coverage
-# eml$dataset$coverage$taxonomicCoverage <-
-#   list(
-#     taxonomicClassification =
-#       purrr::map(1:nrow(taxonomic_coverage), function(i) {
-#         current_row <- taxonomic_coverage[i, ]
-#         list(
-#           taxonRankName = current_row$taxonRank,
-#           taxonRankValue = current_row$scientificName
-#         )
-#       })
-#   )
+# Set temporal and geographic coverage and geographicDescription
+eml$dataset$coverage <-
+  EML::set_coverage(
+    beginDate = format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d"),
+    endDate = format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d"),
+    geographicDescription = metadata$geographic_description,
+    westBoundingCoordinate = min(occurrence$decimalLongitude),
+    southBoundingCoordinate = min(occurrence$decimalLatitude),
+    eastBoundingCoordinate = max(occurrence$decimalLongitude),
+    northBoundingCoordinate = max(occurrence$decimalLatitude)
+  )
+
+# Set taxonomic coverage
+taxonomic_coverage <- data.frame(
+  scientificName = "Plantae",
+  taxonRank = "kingdom"
+)
+  
+eml$dataset$coverage$taxonomicCoverage <-
+  list(
+    taxonomicClassification =
+      purrr::map(1:nrow(taxonomic_coverage), function(i) {
+        current_row <- taxonomic_coverage[i, ]
+        list(
+          taxonRankName = current_row$taxonRank,
+          taxonRankValue = current_row$scientificName
+        )
+      })
+  )
 eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- metadata$taxonomic_description
 ```
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="324260a5-39fc-4c46-9ac0-5a58d006848c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="56de076d-1ae0-4fe7-a9f6-9480c0c33601" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>iaspilot_camalien_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
@@ -59,6 +59,34 @@
     <intellectualRights>
       <para>CC0-1.0</para>
     </intellectualRights>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>Riverine habitatas in Flanders</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>NA</westBoundingCoordinate>
+          <eastBoundingCoordinate>NA</eastBoundingCoordinate>
+          <northBoundingCoordinate>NA</northBoundingCoordinate>
+          <southBoundingCoordinate>NA</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2024-07-18</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2024-09-03</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+      <taxonomicCoverage>
+        <generalTaxonomicCoverage>Vascular plants</generalTaxonomicCoverage>
+        <taxonomicClassification>
+          <taxonRankName>kingdom</taxonRankName>
+          <taxonRankValue>Plantae</taxonRankValue>
+        </taxonomicClassification>
+      </taxonomicCoverage>
+    </coverage>
     <maintenance>
       <description>
         <para/>
