@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="56de076d-1ae0-4fe7-a9f6-9480c0c33601" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="208eaccd-1779-40a5-9960-72d55b3999fd" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>iaspilot_camalien_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
@@ -102,6 +102,23 @@
       <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
       <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
     </contact>
+    <methods>
+      <methodStep>
+        <description>
+          <para>My step description 1</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>My step description 2</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>3</para>
+        </description>
+      </methodStep>
+    </methods>
     <project>
       <title>Biodiversa+ Biodiversity Monitoring Pilot Invasive Alien Species</title>
       <personnel>
