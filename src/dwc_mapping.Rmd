@@ -208,6 +208,28 @@ multimedia <-
 ## Prepare metadata terms
 
 ```{r}
+# Keywords
+keywords <- list(
+  list(
+    keywordThesaurus = paste(
+      "GBIF Dataset Type Vocabulary:",
+      "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
+    ),
+    keyword = "Occurrence"
+  ),
+  list(
+    keywordThesaurus = paste(
+      "GBIF Dataset Subtype Vocabulary:",
+      "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
+    ),
+    keyword = "Observation"
+  ),
+  list(
+    keywordThesaurus = "n/a",
+    keyword = metadata$keywords
+  )
+)
+
 # Temporal coverage
 temporal_coverage <- list(
   rangeOfDates = list(
@@ -273,10 +295,7 @@ eml <- list(
   packageId = uuid::UUIDgenerate(),
   system = "uuid",
   dataset = list(
-    # Set short name and title
     shortName = metadata$short_name,
-    title = metadata$title,
-    # Set abstract
     abstract = list(
       para = c(
         metadata$description_paragraph1,
@@ -285,40 +304,15 @@ eml <- list(
         metadata$description_paragraph4
       )
     ),
-    # Set update frequency (requires a description, even if empty)
     maintenance = list(
-      description = list(para = ""),
+      description = list(para = ""), # Requires a description, even if empty
       maintenanceUpdateFrequency = metadata$update_frequency
     ),
-    # Set creators, contacts and metadata providers
     creator = create_eml_contributors(creators_list),
     contact = create_eml_contributors(contact),
     metadataProvider = create_eml_contributors(metadata_provider),
-    # Set keywords
-    keywordSet =
-      list(
-        list(
-          keywordThesaurus = paste(
-            "GBIF Dataset Type Vocabulary:",
-            "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
-          ),
-          keyword = "Occurrence"
-        ),
-        list(
-          keywordThesaurus = paste(
-            "GBIF Dataset Subtype Vocabulary:",
-            "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
-          ),
-          keyword = "Observation"
-        ),
-        list(
-          keywordThesaurus = "n/a",
-          keyword = metadata$keywords
-        )
-      ),
-    # Set license
+    keywordSet = keywords,
     intellectualRights = list(para = metadata$license_data),
-    # Set coverage
     coverage = list(
       geographicCoverage = list(
         geographicDescription = metadata$geographic_description,
@@ -332,7 +326,6 @@ eml <- list(
       temporalCoverage = temporal_coverage,
       taxonomicCoverage = taxonomic_coverage
     ),
-    # Set methods
     methods = list(
       sampling = list(
         samplingDescription = list(para = metadata$sampling_description),
@@ -345,7 +338,6 @@ eml <- list(
         method_steps, ~ list(description = list(para = .x))
       )
     ),
-    # Set project
     project = list(
       title = project$title,
       abstract = list(para = project$description),
