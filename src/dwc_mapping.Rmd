@@ -205,9 +205,25 @@ multimedia <-
 
 # Create metadata file (eml.xml)
 
+```{r}
+taxonomic_coverage <- data.frame(
+  scientificName = "Plantae",
+  taxonRank = "kingdom"
+)
+taxonomic_classification <-
+  purrr::map(1:nrow(taxonomic_coverage), function(i) {
+    current_row <- taxonomic_coverage[i, ]
+    list(
+      taxonRankName = current_row$taxonRank,
+      taxonRankValue = current_row$scientificName
+    )
+  })
+```
+
+
 ## Function to create contributors in EML format
 
-```{r}
+```{r create_eml_contributors function}
 create_eml_contributors <- function(contributor_list) {
   purrr::map(contributor_list, ~ EML::set_responsibleParty(
     givenName = .$first_name,
@@ -223,95 +239,102 @@ create_eml_contributors <- function(contributor_list) {
 }
 ```
 
-This script is based on input data above.
+## Create EML
 
-```{r EML initiation}
-# Initiate EML
+```{r EML}
 eml <- list(
   packageId = uuid::UUIDgenerate(),
   system = "uuid",
-  dataset = list()
+  dataset = list(
+    # Set short name and title
+    shortName = metadata$short_name,
+    title = metadata$title,
+    # Set abstract
+    abstract = list(
+      para = c(
+        metadata$description_paragraph1,
+        metadata$description_paragraph2,
+        metadata$description_paragraph3,
+        metadata$description_paragraph4
+      )
+    ),
+    # Set update frequency (requires a description, even if empty)
+    maintenance = list(
+      description = list(para = ""),
+      maintenanceUpdateFrequency = metadata$update_frequency
+    ),
+    # Set creators, contacts and metadata providers
+    creator = create_eml_contributors(creators_list),
+    contact = create_eml_contributors(contact),
+    metadataProvider = create_eml_contributors(metadata_provider),
+    # Set keywords
+    keywordSet =
+      list(
+        list(
+          keywordThesaurus = paste(
+            "GBIF Dataset Type Vocabulary:",
+            "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
+          ),
+          keyword = "Occurrence"
+        ),
+        list(
+          keywordThesaurus = paste(
+            "GBIF Dataset Subtype Vocabulary:",
+            "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
+          ),
+          keyword = "Observation"
+        ),
+        list(
+          keywordThesaurus = "n/a",
+          keyword = metadata$keywords
+        )
+      ),
+    # Set license
+    intellectualRights = list(para = metadata$license_data),
+    # Set coverage
+    coverage = list(
+      geographicCoverage = list(
+        geographicDescription = metadata$geographic_description,
+        boundingCoordinates = list(
+          westBoundingCoordinate = min(occurrence$decimalLongitude),
+          southBoundingCoordinate = min(occurrence$decimalLatitude),
+          eastBoundingCoordinate = max(occurrence$decimalLongitude),
+          northBoundingCoordinate = max(occurrence$decimalLatitude)
+        )
+      ),
+      temporalCoverage = list(
+        rangeOfDates = list(
+          beginDate = list(
+            calendarDate = format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+            ),
+          endDate = list(
+            calendarDate = format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+            )
+        )
+      )#,
+      # taxonomicCoverage = list(
+      #     taxonomicClassification = taxonomic_coverage ,
+      #     generalTaxonomicCoverage = metadata$taxonomic_description
+      #   )
+    ),
+    # Set project
+    project = list(
+      title = project$title,
+      abstract = list(para = project$description),
+      funding = list(para = project$funding),
+      studyAreaDescription = list(
+        descriptor = list(descriptorValue = project$study_area_description)
+      ),
+      designDescription = list(
+        description = list(para = project$design_description)
+      ),
+      personnel = create_eml_contributors(project_personnel)
+    )
+  )
 )
-```
-
-```{r EML project}
-eml$dataset$project$title <- project$title
-eml$dataset$project$abstract$para <- project$description
-eml$dataset$project$funding$para <- project$funding
-eml$dataset$project$studyAreaDescription$descriptor$descriptorValue <-
-  project$study_area_description
-eml$dataset$project$designDescription$description$para <- 
-  project$design_description
-eml$dataset$project$personnel <- create_eml_contributors(project_personnel)
 ```
 
 ```{r EML dataset}
-# Set short name and title
-eml$dataset$shortName <- metadata$short_name
-eml$dataset$title <- metadata$title
-
-# Set abstract
-eml$dataset$abstract$para <- 
-  c(
-    metadata$description_paragraph1,
-    metadata$description_paragraph2,
-    metadata$description_paragraph3,
-    metadata$description_paragraph4
-    )
-
-# Set update frequency (requires a description, even if empty)
-eml$dataset$maintenance <- list(
-  description = list(para = ""),
-  maintenanceUpdateFrequency = metadata$update_frequency
-)
-
-# Set creators
-eml$dataset$creator <- create_eml_contributors(creators_list)
-
-# Set contacts
-eml$dataset$contact <- create_eml_contributors(contact)
-
-# Set metadata providers
-eml$dataset$metadataProvider <- create_eml_contributors(metadata_provider)
-
-# Set keywords
-eml$dataset$keywordSet <-
-  list(
-    list(
-      keywordThesaurus = paste(
-        "GBIF Dataset Type Vocabulary:",
-        "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
-      ),
-      keyword = "Occurrence"
-    ),
-    list(
-        keywordThesaurus = paste(
-          "GBIF Dataset Subtype Vocabulary:",
-          "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
-        ),
-        keyword = "Observation"
-      ),
-    list(
-      keywordThesaurus = "n/a",
-      keyword = metadata$keywords
-    )
-  )
-
-# Set license
-eml$dataset$intellectualRights$para <- metadata$license_data
-
-# Set temporal and geographic coverage and geographicDescription
-eml$dataset$coverage <-
-  EML::set_coverage(
-    beginDate = format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d"),
-    endDate = format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d"),
-    geographicDescription = metadata$geographic_description,
-    westBoundingCoordinate = min(occurrence$decimalLongitude),
-    southBoundingCoordinate = min(occurrence$decimalLatitude),
-    eastBoundingCoordinate = max(occurrence$decimalLongitude),
-    northBoundingCoordinate = max(occurrence$decimalLatitude)
-  )
-
 # Set taxonomic coverage
 taxonomic_coverage <- data.frame(
   scientificName = "Plantae",
@@ -328,7 +351,10 @@ eml$dataset$coverage$taxonomicCoverage <-
         )
       })
   )
-eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- metadata$taxonomic_description
+
+eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- 
+  metadata$taxonomic_description
+
 
 # Set methods
 eml$dataset$methods$sampling$samplingDescription$para <- metadata$sampling_description #TODO: does not work yet
