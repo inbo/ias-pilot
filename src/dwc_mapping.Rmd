@@ -25,8 +25,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 ```{r load libraries}
 library(here)
-library(DBI)
-library(duckdb)
 library(dplyr)
 library(readr)
 library(tidyverse)
@@ -217,7 +215,7 @@ keywords <- list(
     ),
     keyword = "Occurrence"
   ),
-  list(
+  list( #TODO: Not taken by IPT
     keywordThesaurus = paste(
       "GBIF Dataset Subtype Vocabulary:",
       "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
@@ -331,7 +329,7 @@ eml <- list(
       sampling = list(
         samplingDescription = list(para = metadata$sampling_description),
         studyExtent = list(description = list(para = metadata$study_extent)),
-        qualityControl = list(
+        qualityControl = list( #TODO: not working yet
           description = list(para = metadata$quality_control)
         )
       ),
