@@ -237,6 +237,12 @@ taxonomic_coverage <-
       }),
     generalTaxonomicCoverage = metadata$taxonomic_description
   )
+
+# Methods
+method_steps <- na.omit(c(
+  metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
+  metadata$step_5, metadata$step_6, metadata$step_7
+))
 ```
 
 
@@ -324,6 +330,12 @@ eml <- list(
       temporalCoverage = temporal_coverage,
       taxonomicCoverage = taxonomic_coverage
     ),
+    # Set methods
+    methods = list(
+      methodStep = purrr::map(
+        method_steps, ~ list(description = list(para = .x))
+      )
+    ),
     # Set project
     project = list(
       title = project$title,
@@ -347,13 +359,8 @@ eml$dataset$methods$sampling$samplingDescription$para <- metadata$sampling_descr
 eml$dataset$methods$sampling$studyExtent$description$para <- metadata$study_extent #TODO: does not work yet
 eml$dataset$methods$qualityControl$description$para <- metadata$quality_control #TODO: does not work yet
 
-method_steps <- na.omit(c(
-  metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
-  metadata$step_5, metadata$step_6, metadata$step_7
-))
-eml$dataset$methods <- list(
-  methodStep = purrr::map(method_steps, ~ list(description = list(para = .x)))
-)
+
+
 ```
 
 ```{r EML additional metadata}
