@@ -206,18 +206,37 @@ multimedia <-
 # Create metadata file (eml.xml)
 
 ```{r}
-taxonomic_coverage <- data.frame(
+# Temporal coverage
+temporal_coverage <- list(
+  rangeOfDates = list(
+    beginDate = list(
+      calendarDate = 
+        format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+    ),
+    endDate = list(
+      calendarDate = 
+        format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+    )
+  )
+)
+
+# Taxonomic coverage
+taxa <- data.frame(
   scientificName = "Plantae",
   taxonRank = "kingdom"
 )
-taxonomic_classification <-
-  purrr::map(1:nrow(taxonomic_coverage), function(i) {
-    current_row <- taxonomic_coverage[i, ]
-    list(
-      taxonRankName = current_row$taxonRank,
-      taxonRankValue = current_row$scientificName
-    )
-  })
+taxonomic_coverage <-
+  list(
+    taxonomicClassification =
+      purrr::map(1:nrow(taxa), function(i) {
+        current_row <- taxa[i, ]
+        list(
+          taxonRankName = current_row$taxonRank,
+          taxonRankValue = current_row$scientificName
+        )
+      }),
+    generalTaxonomicCoverage = metadata$taxonomic_description
+  )
 ```
 
 
@@ -302,20 +321,8 @@ eml <- list(
           northBoundingCoordinate = max(occurrence$decimalLatitude)
         )
       ),
-      temporalCoverage = list(
-        rangeOfDates = list(
-          beginDate = list(
-            calendarDate = format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
-            ),
-          endDate = list(
-            calendarDate = format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
-            )
-        )
-      )#,
-      # taxonomicCoverage = list(
-      #     taxonomicClassification = taxonomic_coverage ,
-      #     generalTaxonomicCoverage = metadata$taxonomic_description
-      #   )
+      temporalCoverage = temporal_coverage,
+      taxonomicCoverage = taxonomic_coverage
     ),
     # Set project
     project = list(
@@ -335,27 +342,6 @@ eml <- list(
 ```
 
 ```{r EML dataset}
-# Set taxonomic coverage
-taxonomic_coverage <- data.frame(
-  scientificName = "Plantae",
-  taxonRank = "kingdom"
-)
-eml$dataset$coverage$taxonomicCoverage <-
-  list(
-    taxonomicClassification =
-      purrr::map(1:nrow(taxonomic_coverage), function(i) {
-        current_row <- taxonomic_coverage[i, ]
-        list(
-          taxonRankName = current_row$taxonRank,
-          taxonRankValue = current_row$scientificName
-        )
-      })
-  )
-
-eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- 
-  metadata$taxonomic_description
-
-
 # Set methods
 eml$dataset$methods$sampling$samplingDescription$para <- metadata$sampling_description #TODO: does not work yet
 eml$dataset$methods$sampling$studyExtent$description$para <- metadata$study_extent #TODO: does not work yet
