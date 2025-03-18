@@ -295,6 +295,7 @@ eml <- list(
   packageId = uuid::UUIDgenerate(),
   system = "uuid",
   dataset = list(
+    title = metadata$title,
     shortName = metadata$short_name,
     abstract = list(
       para = c(
@@ -350,15 +351,19 @@ eml <- list(
       ),
       personnel = create_eml_contributors(project_personnel)
     )
-  )
+  )#, #TODO, does not work yet
+  # additionalMetadata = list( 
+  #   metadata = list(
+  #     gbif = list(
+  #       bibliography = list(
+  #         citation = metadata$bibliographic_citation_and_doi
+  #       )
+  #     )
+  #   )
+  # )
 )
 ```
 
-
-```{r EML additional metadata}
-# Bibliographic citations
-#eml$additionalMetadata$metadata$gbif$bibliography$citation <- references
-```
 
 # Write files
 
