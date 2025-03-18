@@ -205,6 +205,8 @@ multimedia <-
 
 # Create metadata file (eml.xml)
 
+## Prepare metadata terms
+
 ```{r}
 # Temporal coverage
 temporal_coverage <- list(
@@ -332,6 +334,13 @@ eml <- list(
     ),
     # Set methods
     methods = list(
+      sampling = list(
+        samplingDescription = list(para = metadata$sampling_description),
+        studyExtent = list(description = list(para = metadata$study_extent)),
+        qualityControl = list(
+          description = list(para = metadata$quality_control)
+        )
+      ),
       methodStep = purrr::map(
         method_steps, ~ list(description = list(para = .x))
       )
@@ -353,15 +362,6 @@ eml <- list(
 )
 ```
 
-```{r EML dataset}
-# Set methods
-eml$dataset$methods$sampling$samplingDescription$para <- metadata$sampling_description #TODO: does not work yet
-eml$dataset$methods$sampling$studyExtent$description$para <- metadata$study_extent #TODO: does not work yet
-eml$dataset$methods$qualityControl$description$para <- metadata$quality_control #TODO: does not work yet
-
-
-
-```
 
 ```{r EML additional metadata}
 # Bibliographic citations
