@@ -272,11 +272,12 @@ method_steps <- na.omit(c(
 
 ```{r create_eml_contributors function}
 create_eml_contributors <- function(contributor_list) {
-  purrr::map(contributor_list, ~ EML::set_responsibleParty(
-    givenName = .$first_name,
-    surName = .$last_name,
+  purrr::map(contributor_list, ~ list(
+    individualName = list(
+      givenName = .$first_name,
+      surName = .$last_name),
     organizationName = .$organization, # Discouraged by EML, but used by IPT
-    email = .$email,
+    electronicMailAddress = .$email,
     userId = if (!is.na(.$orcid)) {
       list(directory = "https://orcid.org/", .$orcid)
     } else {
