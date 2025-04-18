@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="ced6fae3-822c-402f-8922-e58dea12d095" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="d5c91f8d-93ff-4818-8519-967dab773740" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>iaspilot_camalien_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
@@ -75,7 +75,7 @@
             <calendarDate>2024-07-18</calendarDate>
           </beginDate>
           <endDate>
-            <calendarDate>2024-09-03</calendarDate>
+            <calendarDate>2024-09-09</calendarDate>
           </endDate>
         </rangeOfDates>
       </temporalCoverage>

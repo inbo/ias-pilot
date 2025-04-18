@@ -33,7 +33,7 @@ library(tidyverse)
 ## Load snapshot provided by Aarhus university
 
 ```{r import data}
-file_location <- here::here("data", "raw", "detectionsummary_belgium_20250310_sample.csv")
+file_location <- here::here("data", "raw", "detectionsummary_belgium_20250416_sample.csv")
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
