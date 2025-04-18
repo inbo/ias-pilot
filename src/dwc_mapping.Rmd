@@ -328,11 +328,9 @@ eml <- list(
     methods = list(
       sampling = list(
         samplingDescription = list(para = metadata$sampling_description),
-        studyExtent = list(description = list(para = metadata$study_extent)),
-        qualityControl = list( #TODO: not working yet
-          description = list(para = metadata$quality_control)
-        )
-      ),
+        studyExtent = list(description = list(para = metadata$study_extent))
+        ),
+      qualityControl = list(description = list(para = metadata$quality_control)),
       methodStep = purrr::map(
         method_steps, ~ list(description = list(para = .x))
       )
@@ -342,7 +340,11 @@ eml <- list(
       abstract = list(para = project$description),
       funding = list(para = project$funding),
       studyAreaDescription = list(
-        descriptor = list(descriptorValue = project$study_area_description)
+        descriptor = list(
+          descriptorValue = project$study_area_description,
+          name = "generic",
+          citableClassificationSystem = "false"
+          )
       ),
       designDescription = list(
         description = list(para = project$design_description)
