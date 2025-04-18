@@ -28,6 +28,7 @@ library(here)
 library(dplyr)
 library(readr)
 library(tidyverse)
+library(stringr)
 ```
 
 ## Load snapshot provided by Aarhus university
@@ -293,7 +294,7 @@ create_eml_personnel <- function(project_personnel) {
       givenName = .$first_name,
       surName = .$last_name
     ),
-    role = .$project_personnel_role,
+    role = .$role,
     userId = if (!is.na(.$orcid)) {
       list(directory = "https://orcid.org/", .$orcid)
     } else {
@@ -346,7 +347,7 @@ eml <- list(
       sampling = list(
         samplingDescription = list(para = metadata$sampling_description),
         studyExtent = list(description = list(para = metadata$study_extent))
-        ),
+      ),
       qualityControl = list(description = list(para = metadata$quality_control)),
       methodStep = purrr::map(
         method_steps, ~ list(description = list(para = .x))
@@ -361,23 +362,32 @@ eml <- list(
           descriptorValue = project$study_area_description,
           name = "generic",
           citableClassificationSystem = "false"
-          )
+        )
       ),
       designDescription = list(
         description = list(para = project$design_description)
       ),
       personnel = create_eml_personnel(project_personnel)
     )
-  )#, #TODO, does not work yet
-  # additionalMetadata = list( 
-  #   metadata = list(
-  #     gbif = list(
-  #       bibliography = list(
-  #         citation = metadata$bibliographic_citation_and_doi
-  #       )
-  #     )
-  #   )
-  # )
+  ),
+  additionalMetadata = list(
+    metadata = list(
+      gbif = list(
+        hierarchyLevel = "dataset",
+        bibliography = list(
+          citation = list(
+            list(
+              identifier = str_extract(
+                metadata$bibliographic_citation_and_do, 
+                "https?://[^\\s]+"
+                ),
+              citation = metadata$bibliographic_citation_and_doi
+            )
+          )
+        )
+      )
+    )
+  )
 )
 ```
 
