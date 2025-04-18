@@ -68,7 +68,8 @@ creators_list <- purrr::map(1:nrow(creators), function(i) {
     organization = creators$organization[i],
     country = creators$country[i],
     email = creators$email[i],
-    orcid = creators$orcid[i]
+    orcid = creators$orcid[i],
+    role = creators$project_personnel_role[i]
   )
 })
 
@@ -268,7 +269,7 @@ method_steps <- na.omit(c(
 ```
 
 
-## Function to create contributors in EML format
+## Functions to create contributors and project personnel for EML
 
 ```{r create_eml_contributors function}
 create_eml_contributors <- function(contributor_list) {
@@ -278,6 +279,21 @@ create_eml_contributors <- function(contributor_list) {
       surName = .$last_name),
     organizationName = .$organization, # Discouraged by EML, but used by IPT
     electronicMailAddress = .$email,
+    userId = if (!is.na(.$orcid)) {
+      list(directory = "https://orcid.org/", .$orcid)
+    } else {
+      NULL
+    }
+  ))
+}
+
+create_eml_personnel <- function(project_personnel) {
+  purrr::map(project_personnel, ~ list(
+    individualName = list(
+      givenName = .$first_name,
+      surName = .$last_name
+    ),
+    role = .$project_personnel_role,
     userId = if (!is.na(.$orcid)) {
       list(directory = "https://orcid.org/", .$orcid)
     } else {
@@ -350,7 +366,7 @@ eml <- list(
       designDescription = list(
         description = list(para = project$design_description)
       ),
-      personnel = create_eml_contributors(project_personnel)
+      personnel = create_eml_personnel(project_personnel)
     )
   )#, #TODO, does not work yet
   # additionalMetadata = list( 
