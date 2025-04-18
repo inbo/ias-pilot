@@ -146,8 +146,8 @@ occurrence <-
     ),
     minimumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
     maximumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
-    decimalLatitude = NA, #.data$latitude,
-    decimalLongitude = NA, #.data$longitude,
+    decimalLatitude = .data$lat,
+    decimalLongitude = .data$lon,
     geodeticDatum = "EPSG:4326", # WGS84
     coordinateUncertaintyInMeters = NA, #TODO: fill in
     dateIdentified = format(

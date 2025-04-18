@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="d5c91f8d-93ff-4818-8519-967dab773740" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="7cc0ca07-6ab5-4366-ba07-1729d90ad43c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>iaspilot_camalien_belgium</shortName>
     <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
@@ -63,10 +63,10 @@
       <geographicCoverage>
         <geographicDescription>Riverine habitatas in Flanders</geographicDescription>
         <boundingCoordinates>
-          <westBoundingCoordinate>NA</westBoundingCoordinate>
-          <eastBoundingCoordinate>NA</eastBoundingCoordinate>
-          <northBoundingCoordinate>NA</northBoundingCoordinate>
-          <southBoundingCoordinate>NA</southBoundingCoordinate>
+          <westBoundingCoordinate>4.2288</westBoundingCoordinate>
+          <eastBoundingCoordinate>4.9846</eastBoundingCoordinate>
+          <northBoundingCoordinate>51.0637</northBoundingCoordinate>
+          <southBoundingCoordinate>50.7114</southBoundingCoordinate>
         </boundingCoordinates>
       </geographicCoverage>
       <temporalCoverage>
