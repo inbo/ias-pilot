@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="82fc6cc0-bd66-4c93-9bc2-256ed054c7b9" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="3788d4c2-eef3-4078-8ef2-c7c62c88a0f0" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <shortName>biodiversa_camalien_be</shortName>
     <title>Biodiversa+ IAS pilot - Observations of alien plant species using a vehicle-mounted camera system (Belgium)</title>
@@ -278,6 +278,7 @@
       <gbif>
         <bibliography/>
         <hierarchyLevel>dataset</hierarchyLevel>
+        <resourceLogoUrl>https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg</resourceLogoUrl>
       </gbif>
     </metadata>
   </additionalMetadata>
