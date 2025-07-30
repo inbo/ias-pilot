@@ -399,11 +399,15 @@ eml <- list(
 ```{r write files}
 dir_export <- here::here("data", "processed", metadata$country_code)
 if (!dir.exists(dir_export)) {
-    dir.create(dir_export, recursive = TRUE)
-  }
+  dir.create(dir_export, recursive = TRUE)
+}
 readr::write_csv(occurrence, file.path(dir_export, "occurrence.csv"), na = "")
 readr::write_csv(multimedia, file.path(dir_export, "multimedia.csv"), na = "")
 EML::write_eml(eml, file.path(dir_export, "eml.xml"))
+file.copy(
+  here::here("inst", "extdata", "meta.xml"), # Static meta.xml
+  file.path(dir_export, "meta.xml")
+)
 ```
 
 # Validate EML
