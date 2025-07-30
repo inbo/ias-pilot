@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="b3cbc561-4818-4f32-b21d-46120dcea6bc" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="82fc6cc0-bd66-4c93-9bc2-256ed054c7b9" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
-    <shortName>iaspilot_camalien_belgium</shortName>
-    <title>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium</title>
+    <shortName>biodiversa_camalien_be</shortName>
+    <title>Biodiversa+ IAS pilot - Observations of alien plant species using a vehicle-mounted camera system (Belgium)</title>
     <creator>
       <individualName>
         <givenName>Bram</givenName>
@@ -11,6 +11,51 @@
       <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
       <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
       <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Frédérique</givenName>
+        <surName>Steen</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>frederique.steen@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-5165-8644</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Axel</givenName>
+        <surName>Neukermans</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>axel.neukermans@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0003-0272-9180</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Tim</givenName>
+        <surName>Adriaens</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>tim.adriaens@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-7268-4200</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Lars</givenName>
+        <surName>Dalby</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>lars@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-7270-6999</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Toke T.</givenName>
+        <surName>Hoye</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>tth@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
     </creator>
     <creator>
       <individualName>
@@ -29,6 +74,24 @@
       <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
       <electronicMailAddress>bram.dhondt@inbo.be</electronicMailAddress>
       <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+    </metadataProvider>
+    <metadataProvider>
+      <individualName>
+        <givenName>Lars</givenName>
+        <surName>Dalby</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>lars@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-7270-6999</userId>
+    </metadataProvider>
+    <metadataProvider>
+      <individualName>
+        <givenName>Toke T.</givenName>
+        <surName>Hoye</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>tth@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
     </metadataProvider>
     <metadataProvider>
       <individualName>
@@ -40,7 +103,8 @@
       <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
     </metadataProvider>
     <abstract>
-      <para>IAS pilot - CamAlien observations of alien plant species in Flanders, Belgium is an occurrence dataset publiched by Research Institute for Nature and Forest (INBO). [Example; replace] It is part of the Meetnetten.be suite of monitoring networks for priority species in Flanders, in which data are collected at fixed locations using a standardized protocol (https://meetnetten.be). This dataset contains site counts for 1 priority species (Triturus cristatus), as well as other amphibians observed during sampling. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
+      <para>Biodiversa+ IAS pilot - Observations of alien plant species using a vehicle-mounted camera system (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (AI Lab, Denmark) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
+      <para>Images from the cameras were processed with image recognition algorithms provided through Pl@ntNet. For the current dataset, only pre-selected species of regional importance were retained, and occurrences (images) with insufficient confidence were filtered out.</para>
       <para>We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</para>
       <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa +, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
     </abstract>
@@ -53,7 +117,7 @@
       <keywordThesaurus>GBIF Dataset Subtype Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml</keywordThesaurus>
     </keywordSet>
     <keywordSet>
-      <keyword>CamAlien, invasive alien species</keyword>
+      <keyword>CamAlien, invasive species, alien species, non-native species, IAS, plants</keyword>
       <keywordThesaurus>n/a</keywordThesaurus>
     </keywordSet>
     <intellectualRights>
@@ -61,7 +125,7 @@
     </intellectualRights>
     <coverage>
       <geographicCoverage>
-        <geographicDescription>Riverine habitatas in Flanders</geographicDescription>
+        <geographicDescription>Region of Flanders</geographicDescription>
         <boundingCoordinates>
           <westBoundingCoordinate>4.2288</westBoundingCoordinate>
           <eastBoundingCoordinate>4.9846</eastBoundingCoordinate>
@@ -91,7 +155,7 @@
       <description>
         <para/>
       </description>
-      <maintenanceUpdateFrequency>unknown</maintenanceUpdateFrequency>
+      <maintenanceUpdateFrequency>asNeeded</maintenanceUpdateFrequency>
     </maintenance>
     <contact>
       <individualName>
@@ -105,37 +169,84 @@
     <methods>
       <methodStep>
         <description>
-          <para>My step description 1</para>
+          <para>Partners from the project consortium defined the set of target species (invasive alien plant species of interest), and agreed on a generic sampling plan for the coming field season.</para>
         </description>
       </methodStep>
       <methodStep>
         <description>
-          <para>My step description 2</para>
+          <para>The CamAlien camera system was mounted on a vehicle.</para>
         </description>
       </methodStep>
       <methodStep>
         <description>
-          <para>3</para>
+          <para>The vehicle was driven along the road infrastructure, with the CamAlien system running.</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>The resulting images were shared with the lead partner (University of Aarhus), for storage and first-level edits.</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>The images were transferred to Pl@ntNet, which returned classifications (identifications) of the target species in each of the images.</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>The returned data were processed, by filtering on the confidence level threshold, or any other step deemed necessary to increase reliability.</para>
         </description>
       </methodStep>
       <sampling>
         <studyExtent>
           <description>
-            <para>My study extent</para>
+            <para>The study aimed to detect a set of predetermined invasive plant species in roadside verges on a regional scale during the field season of several consecutive years.</para>
           </description>
         </studyExtent>
         <samplingDescription>
-          <para>My sampling description</para>
+          <para>The CamAlien system essentially is a camera mounted on a moving car. The system continuously takes photos while driving, even at highway speeds. Images are anonymised for GDPR compliance and analysis is powered by the Pl@ntNet API, which returns species confidence scores. The software applies adaptive recording based on speed, and a human observer is able to tag plant sightings on the go, helping to build a better training set for the image recognition models.</para>
         </samplingDescription>
       </sampling>
       <qualityControl>
         <description>
-          <para>My quality control</para>
+          <para>The species recognition algorithm (Pl@ntNet) returned a confidence value for each identification of a plant species in an image. A threshold value above which a confidence score is considered accurate was determined through expert validation. [More info needed.] The images were not individually reviewed.</para>
         </description>
       </qualityControl>
     </methods>
     <project>
-      <title>Biodiversa+ Biodiversity Monitoring Pilot Invasive Alien Species</title>
+      <title>Biodiversa+ monitoring pilot on Invasive Alien Species (IAS)</title>
+      <personnel>
+        <individualName>
+          <givenName>Bram</givenName>
+          <surName>D'hondt</surName>
+        </individualName>
+        <userId directory="https://orcid.org/">0000-0002-1330-1457</userId>
+        <role>author</role>
+      </personnel>
+      <personnel>
+        <individualName>
+          <givenName>Axel</givenName>
+          <surName>Neukermans</surName>
+        </individualName>
+        <userId directory="https://orcid.org/">0000-0003-0272-9180</userId>
+        <role>author</role>
+      </personnel>
+      <personnel>
+        <individualName>
+          <givenName>Lars</givenName>
+          <surName>Dalby</surName>
+        </individualName>
+        <userId directory="https://orcid.org/">0000-0002-7270-6999</userId>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel>
+        <individualName>
+          <givenName>Toke T.</givenName>
+          <surName>Hoye</surName>
+        </individualName>
+        <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
+        <role>principalInvestigator</role>
+      </personnel>
       <personnel>
         <individualName>
           <givenName>Sanne</givenName>
@@ -145,10 +256,10 @@
         <role>publisher</role>
       </personnel>
       <abstract>
-        <para>Project description</para>
+        <para>Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe.</para>
       </abstract>
       <funding>
-        <para>Biodiversa+</para>
+        <para>Biodiversa+, the European Biodiversity Partnership supporting excellent research on biodiversity with an impact on policy and society. Biodiversa+ was jointly developed by BiodivERsA and the European Commission as part of the EU Biodiversity Strategy 2030.</para>
       </funding>
       <studyAreaDescription>
         <descriptor citableClassificationSystem="false" name="generic">
@@ -157,7 +268,7 @@
       </studyAreaDescription>
       <designDescription>
         <description>
-          <para>My design description</para>
+          <para>During several field seasons of the project, the CamAlien camera system (AI Lab, Denmark) was mounted on vehicles to capture images of the vegetation along linear transport infrastructure. Typically, this system was mounted on a car for the monitoring of roadside vegetation. The system was also tested on other types of vehicles (e.g., boats, trains). Plant species were then identified from the images using species recognition algorithms (Pl@ntNet). The focus was specifically on invasive alien plants, in the context of large-scale surveys, rapid detection, and support of species management. This pilot study was conducted in 11 countries across Europe.</para>
         </description>
       </designDescription>
     </project>
