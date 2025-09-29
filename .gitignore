@@ -41,7 +41,7 @@ src/*.html
 src/*.pdf
 
 # Raw files
-data/raw
+/data/raw
 
 # Mac OS X
 .DS_Store
