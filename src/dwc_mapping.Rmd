@@ -185,7 +185,7 @@ multimedia <-
     identifier = .data$imagedataid,
     `dc:type` = "StillImage",
     `dcterms:rights` = "CC-BY-4.0",
-    createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     captureDevice = NA_character_, # TODO: fill in
     resourceCreationTechnique = dplyr::if_else(
       .data$year == 2024,
