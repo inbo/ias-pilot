@@ -312,7 +312,6 @@ eml <- list(
   system = "uuid",
   dataset = list(
     title = metadata$title,
-    shortName = metadata$short_name,
     abstract = list(
       para = c(
         metadata$description_paragraph1,
