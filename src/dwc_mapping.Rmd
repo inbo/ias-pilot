@@ -15,13 +15,13 @@ output:
 
 This script prepares data for publication on [GBIF](https://www.gbif.org/). The script transforms the raw data to a [Darwin Core Archive](https://www.gbif.org/darwin-core) that can be harvested by GBIF. It was developed for the [Biodiversa+ pilot on invasive alien species monitoring](https://www.biodiversa.eu/2024/02/02/pilot-on-invasive-alien-species-monitoring-first-year-report/) project.
 
-# Setup 
+## Setup 
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-## Load libraries
+### Load libraries
 
 ```{r load libraries}
 library(here)
@@ -31,14 +31,14 @@ library(tidyverse)
 library(stringr)
 ```
 
-## Load snapshot provided by Aarhus university
+### Load snapshot provided by Aarhus university
 
 ```{r import data}
 file_location <- here::here("data", "raw", "detectionsummary_belgium_20250416_sample.csv")
 snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
 ```
 
-## Import project-level data
+### Import project-level data
 
 ```{r import google sheets}
 project_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) 
@@ -46,7 +46,7 @@ metadata_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3L
 creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
 ```
 
-## Prepare project-level (meta)data
+### Prepare project-level (meta)data
 
 ```{r}
 project <-
@@ -95,7 +95,7 @@ project_personnel <-
   purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
 ```
 
-## Prepare data
+### Prepare data
 
 ```{r}
 snapshot <-
@@ -117,10 +117,9 @@ snapshot <-
   dplyr::left_join(deployments)
 ```
 
+## Create Darwin Core
 
-# Create dwc
-
-## Create occurrence
+### Create occurrence
 
 ```{r occurrence}
 occurrence <-
@@ -174,7 +173,7 @@ occurrence <-
   )
 ```
 
-## Create Audubon/Audiovisual Media Description extension
+### Create Audiovisual Media Description extension
 
 ```{r multimedia}
 multimedia <-
@@ -186,7 +185,7 @@ multimedia <-
     identifier = .data$imagedataid,
     `dc:type` = "StillImage",
     `dcterms:rights` = "CC-BY-4.0",
-    createDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     captureDevice = NA_character_, # TODO: fill in
     resourceCreationTechnique = dplyr::if_else(
       .data$year == 2024,
@@ -204,9 +203,9 @@ multimedia <-
   )
 ```
 
-# Create metadata file (eml.xml)
+## Create metadata file (eml.xml)
 
-## Prepare metadata terms
+### Prepare metadata terms
 
 ```{r}
 # Keywords
@@ -270,8 +269,7 @@ method_steps <- na.omit(c(
 ))
 ```
 
-
-## Functions to create contributors and project personnel for EML
+### Functions to create contributors and project personnel for EML
 
 ```{r create_eml_contributors function}
 create_eml_contributors <- function(contributor_list) {
@@ -305,7 +303,7 @@ create_eml_personnel <- function(project_personnel) {
 }
 ```
 
-## Create EML
+### Create EML
 
 ```{r EML}
 eml <- list(
@@ -393,8 +391,7 @@ eml <- list(
 )
 ```
 
-
-# Write files
+## Write files
 
 ```{r write files}
 dir_export <- here::here("data", "processed", metadata$country_code)
@@ -410,7 +407,7 @@ file.copy(
 )
 ```
 
-# Validate EML
+## Validate EML
 
 ```{r}
 EML::eml_validate(file.path(dir_export, "eml.xml"))
