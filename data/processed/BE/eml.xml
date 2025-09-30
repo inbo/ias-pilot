@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="3788d4c2-eef3-4078-8ef2-c7c62c88a0f0" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="3e41e613-0a9e-442c-b05d-0815c14a51c9" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
-    <shortName>biodiversa_camalien_be</shortName>
-    <title>Biodiversa+ IAS pilot - Observations of alien plant species using a vehicle-mounted camera system (Belgium)</title>
+    <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
       <individualName>
         <givenName>Bram</givenName>
@@ -103,10 +102,10 @@
       <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
     </metadataProvider>
     <abstract>
-      <para>Biodiversa+ IAS pilot - Observations of alien plant species using a vehicle-mounted camera system (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (AI Lab, Denmark) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
+      <para>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (AI Lab, Denmark) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
       <para>Images from the cameras were processed with image recognition algorithms provided through Pl@ntNet. For the current dataset, only pre-selected species of regional importance were retained, and occurrences (images) with insufficient confidence were filtered out.</para>
       <para>We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</para>
-      <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa +, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
+      <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa+, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
     </abstract>
     <keywordSet>
       <keyword>Occurrence</keyword>
