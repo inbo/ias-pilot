@@ -192,7 +192,9 @@ multimedia <-
       "timelapse based on vehicle speed"
       ),
     accessURI = .data$url,
-    `dc:format` = "image/jpeg", # TODO: year-dependent
+    `dc:format` = dplyr::if_else(
+      tools::file_ext(.data$url) == "jpg", "image/jpeg", "image/tiff"
+      ),
     serviceExpectation = "online"
   ) %>%
   dplyr::select(
