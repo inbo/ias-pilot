@@ -139,7 +139,7 @@ occurrence <-
     parentEventID = .data$deploymentID,
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"), #TODO: check time zones
     habitat = metadata$habitat,
-    samplingProtocol = "moving camera on vehicle",
+    samplingProtocol = "CamAlien, https://doi.org/10.12688/f1000research.141992.2",
     samplingEffort = paste(
       format(.data$deployment_start, format = "%Y-%m-%dT%H:%M:%SZ"),
       format(.data$deployment_end, format = "%Y-%m-%dT%H:%M:%SZ"),
