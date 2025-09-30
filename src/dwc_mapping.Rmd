@@ -130,7 +130,6 @@ occurrence <-
     license = metadata$license_data,
     rightsHolder = metadata$rights_holder,
     datasetID = "",
-    collectionCode = "CamAlien",
     datasetName = metadata$title,
     basisOfRecord = "MachineObservation",
     occurrenceID = .data$detectionsummaryid,
@@ -162,7 +161,7 @@ occurrence <-
     kingdom = "Plantae"
   ) %>%
   dplyr::select(
-    "type", "license", "rightsHolder", "datasetID", "collectionCode",
+    "type", "license", "rightsHolder", "datasetID",
     "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
     "eventID", "parentEventID", "eventDate", "habitat", "samplingProtocol", 
     "samplingEffort", "countryCode", "minimumDistanceAboveSurfaceInMeters",
@@ -197,7 +196,7 @@ multimedia <-
     serviceExpectation = "online"
   ) %>%
   dplyr::select(
-    "occurrenceID", "identifier", "dc:type", "dcterms:rights", "createDate",
+    "occurrenceID", "identifier", "dc:type", "dcterms:rights", "CreateDate",
     "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
     "serviceExpectation",
   )
