@@ -155,6 +155,7 @@ occurrence <-
       .data$detection_timestamp,
       format = "%Y-%m-%dT%H:%M:%SZ"
     ),
+    identificationVerificationStatus = "not validated",
     identificationRemarks = NA_character_, #TODO: fill in
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
@@ -167,8 +168,8 @@ occurrence <-
     "samplingEffort", "countryCode", "minimumDistanceAboveSurfaceInMeters",
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude", 
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
-    "identifiedBy", "dateIdentified", "identificationRemarks", "taxonID",
-    "scientificName", "kingdom"
+    "identifiedBy", "dateIdentified", "identificationVerificationStatus",
+    "identificationRemarks", "taxonID", "scientificName", "kingdom"
   )
 ```
 
