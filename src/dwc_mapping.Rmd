@@ -403,7 +403,8 @@ readr::write_csv(multimedia, file.path(dir_export, "multimedia.csv"), na = "")
 EML::write_eml(eml, file.path(dir_export, "eml.xml"))
 file.copy(
   here::here("inst", "extdata", "meta.xml"), # Static meta.xml
-  file.path(dir_export, "meta.xml")
+  file.path(dir_export, "meta.xml"),
+  overwrite = TRUE
 )
 ```
 
