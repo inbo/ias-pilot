@@ -150,7 +150,7 @@ occurrence <-
     decimalLongitude = .data$lon,
     geodeticDatum = "EPSG:4326", # WGS84
     coordinateUncertaintyInMeters = NA, #TODO: fill in
-    identifiedBy = "Pl@ntNet",
+    identifiedBy = paste("Pl@ntNet", .data$plantnet_version),
     dateIdentified = format(
       .data$detection_timestamp,
       format = "%Y-%m-%dT%H:%M:%SZ"
