@@ -189,8 +189,8 @@ multimedia <-
     captureDevice = NA_character_, # TODO: fill in
     resourceCreationTechnique = dplyr::if_else(
       .data$year == 2024,
-      "fixed sampling rate",
-      "timelapse based on vehicle speed"
+      "Image captured as part of a fixed sampling rate",
+      "Image captured as part of a vehicle speed dependent rate"
       ),
     accessURI = .data$url,
     `dc:format` = dplyr::if_else(
