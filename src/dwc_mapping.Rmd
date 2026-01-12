@@ -150,6 +150,7 @@ occurrence <-
     decimalLongitude = .data$lon,
     geodeticDatum = "EPSG:4326", # WGS84
     coordinateUncertaintyInMeters = NA, #TODO: fill in
+    identifiedBy = "Pl@ntNet",
     dateIdentified = format(
       .data$detection_timestamp,
       format = "%Y-%m-%dT%H:%M:%SZ"
@@ -166,8 +167,8 @@ occurrence <-
     "samplingEffort", "countryCode", "minimumDistanceAboveSurfaceInMeters",
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude", 
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
-    "dateIdentified", "identificationRemarks", "taxonID", "scientificName", 
-    "kingdom"
+    "identifiedBy", "dateIdentified", "identificationRemarks", "taxonID",
+    "scientificName", "kingdom"
   )
 ```
 
