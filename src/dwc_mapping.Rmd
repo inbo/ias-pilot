@@ -102,12 +102,11 @@ snapshot <-
   snapshot %>% 
   dplyr::mutate(
     timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
-    year = format(.data$timestamp_date, format = "%Y"),
-    deploymentID = paste(metadata$country_code, timestamp_date, sep = "_")
+    year = format(.data$timestamp_date, format = "%Y")
   )
 deployments <-
   snapshot %>% 
-  dplyr::group_by(deploymentID) %>% 
+  dplyr::group_by(sessionid) %>% 
   summarise(
     deployment_start = min(.data$timestamp),
     deployment_end = max(.data$timestamp)
@@ -135,7 +134,7 @@ occurrence <-
     occurrenceID = .data$detectionsummaryid,
     occurrenceStatus = "present",
     eventID = .data$imagedataid,
-    parentEventID = .data$deploymentID,
+    parentEventID = .data$sessionid,
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"), #TODO: check time zones
     habitat = metadata$habitat,
     samplingProtocol = "CamAlien, https://doi.org/10.12688/f1000research.141992.2",
