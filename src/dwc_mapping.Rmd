@@ -136,7 +136,7 @@ occurrence <-
     occurrenceStatus = "present",
     eventID = .data$imagedataid,
     parentEventID = .data$deploymentID,
-    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"), #TODO: check time zones
+    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     habitat = metadata$habitat,
     samplingProtocol = "CamAlien, https://doi.org/10.12688/f1000research.141992.2",
     samplingEffort = paste(
@@ -157,7 +157,6 @@ occurrence <-
       format = "%Y-%m-%dT%H:%M:%SZ"
     ),
     identificationVerificationStatus = "not validated",
-    identificationRemarks = NA_character_, #TODO: fill in
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
@@ -170,7 +169,7 @@ occurrence <-
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude", 
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
-    "identificationRemarks", "taxonID", "scientificName", "kingdom"
+    "taxonID", "scientificName", "kingdom"
   )
 ```
 
