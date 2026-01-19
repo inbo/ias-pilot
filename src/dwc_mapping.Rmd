@@ -219,7 +219,7 @@ keywords <- list(
     ),
     keyword = "Occurrence"
   ),
-  list( #TODO: Not taken by IPT
+  list(
     keywordThesaurus = paste(
       "GBIF Dataset Subtype Vocabulary:",
       "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
