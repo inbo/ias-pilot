@@ -48,16 +48,16 @@ creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3L
 
 ```{r}
 project <-
-  project_raw %>% 
-  dplyr::select(term, value) %>% 
+  project_raw %>%
+  dplyr::select(term, value) %>%
   tidyr::pivot_wider(names_from = term, values_from = value)
-metadata <- 
-  metadata_raw %>% 
-  dplyr::select(term, value) %>% 
+metadata <-
+  metadata_raw %>%
+  dplyr::select(term, value) %>%
   tidyr::pivot_wider(names_from = term, values_from = value)
 creators <-
-  creators_raw %>% 
-  dplyr::arrange(order) %>% 
+  creators_raw %>%
+  dplyr::arrange(order) %>%
   dplyr::mutate(title = paste(first_name, last_name))
 creators_list <- purrr::map(1:nrow(creators), function(i) {
   list(
@@ -72,24 +72,24 @@ creators_list <- purrr::map(1:nrow(creators), function(i) {
   )
 })
 
-metadata_provider_names <- 
-  creators %>% 
+metadata_provider_names <-
+  creators %>%
   dplyr::filter(metadata_provider == TRUE) %>%
   dplyr::pull(title)
-metadata_provider <- 
+metadata_provider <-
   purrr::keep(creators_list, ~ .x$title %in% metadata_provider_names)
 
-contact_names <- 
-  creators %>% 
+contact_names <-
+  creators %>%
   dplyr::filter(contact == TRUE) %>%
   dplyr::pull(title)
 contact <- purrr::keep(creators_list, ~ .x$title %in% contact_names)
 
-project_personnel_names <- 
-  creators %>% 
-  dplyr::filter(project_personnel == TRUE) %>% 
+project_personnel_names <-
+  creators %>%
+  dplyr::filter(project_personnel == TRUE) %>%
   dplyr::pull(title)
-project_personnel <- 
+project_personnel <-
   purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
 ```
 
@@ -97,15 +97,15 @@ project_personnel <-
 
 ```{r}
 snapshot <-
-  snapshot %>% 
+  snapshot %>%
   dplyr::mutate(
     timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
     year = format(.data$timestamp_date, format = "%Y"),
     deploymentID = paste(metadata$country_code, timestamp_date, sep = "_")
   )
 deployments <-
-  snapshot %>% 
-  dplyr::group_by(deploymentID) %>% 
+  snapshot %>%
+  dplyr::group_by(deploymentID) %>%
   summarise(
     deployment_start = min(.data$timestamp),
     deployment_end = max(.data$timestamp)
@@ -121,7 +121,7 @@ snapshot <-
 
 ```{r occurrence}
 occurrence <-
-  snapshot %>% 
+  snapshot %>%
   dplyr::mutate(
     .keep = "none",
     type = "Image",
@@ -162,9 +162,9 @@ occurrence <-
   dplyr::select(
     "type", "license", "rightsHolder", "datasetID",
     "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
-    "eventID", "parentEventID", "eventDate", "habitat", "samplingProtocol", 
+    "eventID", "parentEventID", "eventDate", "habitat", "samplingProtocol",
     "samplingEffort", "countryCode", "minimumDistanceAboveSurfaceInMeters",
-    "maximumDistanceAboveSurfaceInMeters", "decimalLatitude", 
+    "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
     "taxonID", "scientificName", "kingdom"
@@ -189,11 +189,11 @@ multimedia <-
       .data$year == 2024,
       "Image captured as part of a fixed sampling rate",
       "Image captured as part of a vehicle speed dependent rate"
-      ),
+    ),
     accessURI = .data$url,
     `dc:format` = dplyr::if_else(
       tools::file_ext(.data$url) == "jpg", "image/jpeg", "image/tiff"
-      ),
+    ),
     serviceExpectation = "online"
   ) %>%
   dplyr::select(
@@ -234,11 +234,11 @@ keywords <- list(
 temporal_coverage <- list(
   rangeOfDates = list(
     beginDate = list(
-      calendarDate = 
+      calendarDate =
         format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
     ),
     endDate = list(
-      calendarDate = 
+      calendarDate =
         format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
     )
   )
@@ -284,7 +284,8 @@ create_eml_contributors <- function(contributor_list) {
   purrr::map(contributor_list, ~ list(
     individualName = list(
       givenName = .$first_name,
-      surName = .$last_name),
+      surName = .$last_name
+    ),
     organizationName = .$organization, # Discouraged by EML, but used by IPT
     electronicMailAddress = .$email,
     userId = if (!is.na(.$orcid)) {
@@ -361,8 +362,7 @@ eml <- list(
     ),
     project = list(
       title = "Biodiversa+ monitoring pilot on Invasive Alien Species (IAS)",
-      abstract = list(para = "Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe."
-               ),
+      abstract = list(para = "Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe."),
       funding = list(para = "Biodiversa+, the European Biodiversity Partnership supporting excellent research on biodiversity with an impact on policy and society. Biodiversa+ was jointly developed by BiodivERsA and the European Commission as part of the EU Biodiversity Strategy 2030."),
       studyAreaDescription = list(
         descriptor = list(
@@ -416,4 +416,3 @@ file.copy(
 ```{r}
 EML::eml_validate(file.path(dir_export, "eml.xml"))
 ```
-
