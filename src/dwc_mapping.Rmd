@@ -248,8 +248,16 @@ temporal_coverage <- list(
 
 # Taxonomic coverage
 taxa <- data.frame(
-  scientificName = "Plantae",
-  taxonRank = "kingdom"
+  scientificName = c(
+    "Ailanthus altissima",
+    "Baccharis halimifolia",
+    "Elaeagnus angustifolia",
+    "Impatiens glandulifera",
+    "Reynoutria sachalinensis",
+    "Robinia pseudoacacia",
+    "Rosa rugosa"
+  ),
+  taxonRank = "species"
 )
 taxonomic_coverage <-
   list(
