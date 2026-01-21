@@ -383,13 +383,8 @@ eml <- list(
         hierarchyLevel = "dataset",
         bibliography = list(
           citation = list(
-            list(
-              identifier = str_extract(
-                metadata$bibliographic_citation_and_doi, 
-                "https?://[^\\s]+"
-                ),
-              citation = metadata$bibliographic_citation_and_doi
-            )
+            list(citation = metadata$bibliographic_citation_and_doi1),
+            list(citation = metadata$bibliographic_citation_and_doi2)
           )
         ),
         resourceLogoUrl = "https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg"

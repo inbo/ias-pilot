@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="d9499b86-1365-4fcd-88f5-e21d63d8a78e" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="bd194150-f082-41c9-bbd9-70a263e63ac3" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -341,7 +341,8 @@
     <metadata>
       <gbif>
         <bibliography>
-          <citation>Dyrmann M, Skovsen SK, Christiansen PH et al. High-speed camera system for efficient monitoring of invasive plant species along roadways [version 2; peer review: 3 approved]. F1000Research 2024, 13:360 (https://doi.org/10.12688/f1000research.141992.2)<identifier>https://doi.org/10.12688/f1000research.141992.2)</identifier></citation>
+          <citation>Dyrmann M, Skovsen SK, Christiansen PH et al. (2024) High-speed camera system for efficient monitoring of invasive plant species along roadways. F1000Research 2024, 13:360. https://doi.org/10.12688/f1000research.141992.2</citation>
+          <citation>Espitalier V, Lombardo JC, Goëau H, Botella C, Høye T T, Dyrmann M, Bonnet P, Joly A (2025). Adapting a global plant identification model to detect invasive alien plant species in high-resolution road side images. Ecological Informatics 89. https://doi.org/10.1016/j.ecoinf.2025.103129</citation>
         </bibliography>
         <hierarchyLevel>dataset</hierarchyLevel>
         <resourceLogoUrl>https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg</resourceLogoUrl>
