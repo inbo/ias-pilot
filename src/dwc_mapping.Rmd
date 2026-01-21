@@ -30,11 +30,11 @@ library(tidyverse)
 library(stringr)
 ```
 
-### Load snapshot provided by Aarhus university
+### Load data provided by Aarhus university
 
 ```{r import data}
-file_location <- here::here("data", "raw", "detectionsummary_belgium_20250416_sample.csv")
-snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";")
+file_location <- here::here("data", "raw", "camalien_belgium_export_20260120.csv")
+data <- readr::read_csv(file_location)
 ```
 
 ### Import project-level data
@@ -96,8 +96,8 @@ project_personnel <-
 ### Prepare data
 
 ```{r}
-snapshot <-
-  snapshot |>
+data <-
+  data |>
   dplyr::mutate(
     timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
     year = format(.data$timestamp_date, format = "%Y"),
@@ -110,17 +110,21 @@ snapshot <-
       .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
       .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
       .data$scientificname == "Rosa rugosa" ~ 92.563
-    )
+    ),
+    coordinates = stringr::str_replace(.data$position, "POINT\\(", "") |>
+      stringr::str_replace("\\)", ""),
+    lon = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 1]),
+    lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
   )
 deployments <-
-  snapshot |>
+  data |>
   dplyr::group_by(deploymentID) |>
   summarise(
     deployment_start = min(.data$timestamp),
     deployment_end = max(.data$timestamp)
   )
-snapshot <-
-  snapshot |>
+data <-
+  data |>
   dplyr::left_join(deployments)
 ```
 
@@ -130,7 +134,7 @@ snapshot <-
 
 ```{r occurrence}
 occurrence <-
-  snapshot |>
+  data |>
   dplyr::mutate(
     .keep = "none",
     type = "Image",
@@ -186,7 +190,7 @@ occurrence <-
 
 ```{r multimedia}
 multimedia <-
-  snapshot |>
+  data |>
   dplyr::arrange(.data$timestamp) |>
   dplyr::mutate(
     .keep = "none",

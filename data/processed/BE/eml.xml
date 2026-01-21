@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="bd194150-f082-41c9-bbd9-70a263e63ac3" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="0e8c12d2-3ab7-4ddb-8daa-50ef221c70f6" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -152,10 +152,10 @@
       <geographicCoverage>
         <geographicDescription>Region of Flanders</geographicDescription>
         <boundingCoordinates>
-          <westBoundingCoordinate>4.2288</westBoundingCoordinate>
-          <eastBoundingCoordinate>4.9846</eastBoundingCoordinate>
-          <northBoundingCoordinate>51.0637</northBoundingCoordinate>
-          <southBoundingCoordinate>50.7114</southBoundingCoordinate>
+          <westBoundingCoordinate>4.2162</westBoundingCoordinate>
+          <eastBoundingCoordinate>4.9827</eastBoundingCoordinate>
+          <northBoundingCoordinate>51.0716</northBoundingCoordinate>
+          <southBoundingCoordinate>50.7051</southBoundingCoordinate>
         </boundingCoordinates>
       </geographicCoverage>
       <temporalCoverage>
