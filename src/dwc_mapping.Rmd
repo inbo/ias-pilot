@@ -48,16 +48,16 @@ creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3L
 
 ```{r}
 project <-
-  project_raw %>%
-  dplyr::select(term, value) %>%
+  project_raw |>
+  dplyr::select(term, value) |>
   tidyr::pivot_wider(names_from = term, values_from = value)
 metadata <-
-  metadata_raw %>%
-  dplyr::select(term, value) %>%
+  metadata_raw |>
+  dplyr::select(term, value) |>
   tidyr::pivot_wider(names_from = term, values_from = value)
 creators <-
-  creators_raw %>%
-  dplyr::arrange(order) %>%
+  creators_raw |>
+  dplyr::arrange(order) |>
   dplyr::mutate(title = paste(first_name, last_name))
 creators_list <- purrr::map(1:nrow(creators), function(i) {
   list(
@@ -73,21 +73,21 @@ creators_list <- purrr::map(1:nrow(creators), function(i) {
 })
 
 metadata_provider_names <-
-  creators %>%
-  dplyr::filter(metadata_provider == TRUE) %>%
+  creators |>
+  dplyr::filter(metadata_provider == TRUE) |>
   dplyr::pull(title)
 metadata_provider <-
   purrr::keep(creators_list, ~ .x$title %in% metadata_provider_names)
 
 contact_names <-
-  creators %>%
-  dplyr::filter(contact == TRUE) %>%
+  creators |>
+  dplyr::filter(contact == TRUE) |>
   dplyr::pull(title)
 contact <- purrr::keep(creators_list, ~ .x$title %in% contact_names)
 
 project_personnel_names <-
-  creators %>%
-  dplyr::filter(project_personnel == TRUE) %>%
+  creators |>
+  dplyr::filter(project_personnel == TRUE) |>
   dplyr::pull(title)
 project_personnel <-
   purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
@@ -97,21 +97,21 @@ project_personnel <-
 
 ```{r}
 snapshot <-
-  snapshot %>%
+  snapshot |>
   dplyr::mutate(
     timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
     year = format(.data$timestamp_date, format = "%Y"),
     deploymentID = paste(metadata$country_code, timestamp_date, sep = "_")
   )
 deployments <-
-  snapshot %>%
-  dplyr::group_by(deploymentID) %>%
+  snapshot |>
+  dplyr::group_by(deploymentID) |>
   summarise(
     deployment_start = min(.data$timestamp),
     deployment_end = max(.data$timestamp)
   )
 snapshot <-
-  snapshot %>%
+  snapshot |>
   dplyr::left_join(deployments)
 ```
 
@@ -121,7 +121,7 @@ snapshot <-
 
 ```{r occurrence}
 occurrence <-
-  snapshot %>%
+  snapshot |>
   dplyr::mutate(
     .keep = "none",
     type = "Image",
@@ -158,7 +158,7 @@ occurrence <-
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
-  ) %>%
+  ) |>
   dplyr::select(
     "type", "license", "rightsHolder", "datasetID",
     "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
@@ -175,8 +175,8 @@ occurrence <-
 
 ```{r multimedia}
 multimedia <-
-  snapshot %>%
-  dplyr::arrange(.data$timestamp) %>%
+  snapshot |>
+  dplyr::arrange(.data$timestamp) |>
   dplyr::mutate(
     .keep = "none",
     occurrenceID = .data$detectionsummaryid,
@@ -195,7 +195,7 @@ multimedia <-
       tools::file_ext(.data$url) == "jpg", "image/jpeg", "image/tiff"
     ),
     serviceExpectation = "online"
-  ) %>%
+  ) |>
   dplyr::select(
     "occurrenceID", "identifier", "dc:type", "dcterms:rights", "CreateDate",
     "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
