@@ -101,7 +101,16 @@ snapshot <-
   dplyr::mutate(
     timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
     year = format(.data$timestamp_date, format = "%Y"),
-    deploymentID = paste(metadata$country_code, timestamp_date, sep = "_")
+    deploymentID = paste(metadata$country_code, timestamp_date, sep = "_"),
+    precision = dplyr::case_when(
+      .data$scientificname == "Ailanthus altissima" ~ 90.86,
+      .data$scientificname == "Baccharis halimifolia" ~ 75,
+      .data$scientificname == "Elaeagnus angustifolia" ~ 100,
+      .data$scientificname == "Impatiens glandulifera" ~ 97.32,
+      .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
+      .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
+      .data$scientificname == "Rosa rugosa" ~ 92.563
+    )
   )
 deployments <-
   snapshot |>
@@ -155,6 +164,8 @@ occurrence <-
       format = "%Y-%m-%dT%H:%M:%SZ"
     ),
     identificationVerificationStatus = "not validated",
+    identificationRemarks =
+      paste0("identified with ", .data$precision, "% precision"),
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
@@ -167,7 +178,7 @@ occurrence <-
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
-    "taxonID", "scientificName", "kingdom"
+    "identificationRemarks", "taxonID", "scientificName", "kingdom"
   )
 ```
 
