@@ -1,8 +1,7 @@
 ---
 title: "Darwin Core mapping"
 subtitle: "For: CamAlien"
-author:
-- Sanne Govaert
+author: Sanne Govaert
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -41,7 +40,6 @@ snapshot <- readr::read_delim(file_location, show_col_types = FALSE, delim = ";"
 ### Import project-level data
 
 ```{r import google sheets}
-project_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1501598855&single=true&output=csv", show_col_types = FALSE) 
 metadata_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=0&single=true&output=csv", show_col_types = FALSE)
 creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
 ```
@@ -362,18 +360,19 @@ eml <- list(
       )
     ),
     project = list(
-      title = project$title,
-      abstract = list(para = project$description),
-      funding = list(para = project$funding),
+      title = "Biodiversa+ monitoring pilot on Invasive Alien Species (IAS)",
+      abstract = list(para = "Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe."
+               ),
+      funding = list(para = "Biodiversa+, the European Biodiversity Partnership supporting excellent research on biodiversity with an impact on policy and society. Biodiversa+ was jointly developed by BiodivERsA and the European Commission as part of the EU Biodiversity Strategy 2030."),
       studyAreaDescription = list(
         descriptor = list(
-          descriptorValue = project$study_area_description,
+          descriptorValue = "Europe",
           name = "generic",
           citableClassificationSystem = "false"
         )
       ),
       designDescription = list(
-        description = list(para = project$design_description)
+        description = list(para = "During several field seasons of the project, the CamAlien camera system (AI Lab, Denmark) was mounted on vehicles to capture images of the vegetation along linear transport infrastructure. Typically, this system was mounted on a car for the monitoring of roadside vegetation. The system was also tested on other types of vehicles (e.g., boats, trains). Plant species were then identified from the images using species recognition algorithms (Pl@ntNet). The focus was specifically on invasive alien plants, in the context of large-scale surveys, rapid detection, and support of species management. This pilot study was conducted in 11 countries across Europe.")
       ),
       personnel = create_eml_personnel(project_personnel)
     )
@@ -393,7 +392,7 @@ eml <- list(
             )
           )
         ),
-        resourceLogoUrl = project$logo
+        resourceLogoUrl = "https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg"
       )
     )
   )
