@@ -378,7 +378,7 @@ eml <- list(
           citation = list(
             list(
               identifier = str_extract(
-                metadata$bibliographic_citation_and_do, 
+                metadata$bibliographic_citation_and_doi, 
                 "https?://[^\\s]+"
                 ),
               citation = metadata$bibliographic_citation_and_doi

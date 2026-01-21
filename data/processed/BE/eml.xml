@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="779f7acc-c348-45ad-ba8c-5213a3a9245c" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="62ce2958-eb55-49d6-b10e-9b0ebe07eb12" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -49,8 +49,25 @@
     </creator>
     <creator>
       <individualName>
+        <givenName>Mark A.K.</givenName>
+        <surName>Gillespie</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>markg@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-9808-4836</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Kavi Askholm</givenName>
+        <surName>Mellerup</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>kavi@ecos.au.dk</electronicMailAddress>
+    </creator>
+    <creator>
+      <individualName>
         <givenName>Toke T.</givenName>
-        <surName>Hoye</surName>
+        <surName>Høye</surName>
       </individualName>
       <organizationName>Aarhus University</organizationName>
       <electronicMailAddress>tth@ecos.au.dk</electronicMailAddress>
@@ -85,8 +102,17 @@
     </metadataProvider>
     <metadataProvider>
       <individualName>
+        <givenName>Mark A.K.</givenName>
+        <surName>Gillespie</surName>
+      </individualName>
+      <organizationName>Aarhus University</organizationName>
+      <electronicMailAddress>markg@ecos.au.dk</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0001-9808-4836</userId>
+    </metadataProvider>
+    <metadataProvider>
+      <individualName>
         <givenName>Toke T.</givenName>
-        <surName>Hoye</surName>
+        <surName>Høye</surName>
       </individualName>
       <organizationName>Aarhus University</organizationName>
       <electronicMailAddress>tth@ecos.au.dk</electronicMailAddress>
@@ -102,8 +128,8 @@
       <userId directory="https://orcid.org/">0000-0002-8939-1305</userId>
     </metadataProvider>
     <abstract>
-      <para>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (AI Lab, Denmark) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
-      <para>Images from the cameras were processed with image recognition algorithms provided through Pl@ntNet. For the current dataset, only pre-selected species of regional importance were retained, and occurrences (images) with insufficient confidence were filtered out.</para>
+      <para>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (Dyrmann et al. 2024) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
+      <para>Images from the cameras were processed with image recognition algorithms provided through Pl@ntNet (Espitalier et al. 2025). For the current dataset, only pre-selected species of regional importance were retained, and occurrences (images) with insufficient confidence were filtered out.</para>
       <para>We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</para>
       <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa+, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
     </abstract>
@@ -143,7 +169,7 @@
         </rangeOfDates>
       </temporalCoverage>
       <taxonomicCoverage>
-        <generalTaxonomicCoverage>Vascular plants</generalTaxonomicCoverage>
+        <generalTaxonomicCoverage>7 non-native species of vascular plants</generalTaxonomicCoverage>
         <taxonomicClassification>
           <taxonRankName>kingdom</taxonRankName>
           <taxonRankValue>Plantae</taxonRankValue>
@@ -183,7 +209,7 @@
       </methodStep>
       <methodStep>
         <description>
-          <para>The resulting images were shared with the lead partner (University of Aarhus), for storage and first-level edits.</para>
+          <para>The resulting images were shared with the lead partner (Aarhus University), for storage and first-level edits.</para>
         </description>
       </methodStep>
       <methodStep>
@@ -208,7 +234,7 @@
       </sampling>
       <qualityControl>
         <description>
-          <para>The species recognition algorithm (Pl@ntNet) returned a confidence value for each identification of a plant species in an image. A threshold value above which a confidence score is considered accurate was determined through expert validation. [More info needed.] The images were not individually reviewed.</para>
+          <para>The species recognition algorithm (Pl@ntNet) returned a confidence value for each identification of a plant species in an image. A threshold value above which a confidence score is considered accurate was determined through expert validation and statistical modelling. Expert botanists annotated a subset of images with a range of confidence scores for presence/absence of the classified species. Presence/absence was then modelled as a binary response in a logistic GLM (General Linear Model) against confidence score. The confidence score providing a 50% probability of presence was then selected as threshold value. The images resulting from this filtering process were not all individually reviewed.</para>
         </description>
       </qualityControl>
     </methods>
@@ -240,8 +266,23 @@
       </personnel>
       <personnel>
         <individualName>
+          <givenName>Mark A.K.</givenName>
+          <surName>Gillespie</surName>
+        </individualName>
+        <userId directory="https://orcid.org/">0000-0001-9808-4836</userId>
+        <role>author</role>
+      </personnel>
+      <personnel>
+        <individualName>
+          <givenName>Kavi Askholm</givenName>
+          <surName>Mellerup</surName>
+        </individualName>
+        <role>author</role>
+      </personnel>
+      <personnel>
+        <individualName>
           <givenName>Toke T.</givenName>
-          <surName>Hoye</surName>
+          <surName>Høye</surName>
         </individualName>
         <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
         <role>principalInvestigator</role>
@@ -275,7 +316,9 @@
   <additionalMetadata>
     <metadata>
       <gbif>
-        <bibliography/>
+        <bibliography>
+          <citation>Dyrmann M, Skovsen SK, Christiansen PH et al. High-speed camera system for efficient monitoring of invasive plant species along roadways [version 2; peer review: 3 approved]. F1000Research 2024, 13:360 (https://doi.org/10.12688/f1000research.141992.2)<identifier>https://doi.org/10.12688/f1000research.141992.2)</identifier></citation>
+        </bibliography>
         <hierarchyLevel>dataset</hierarchyLevel>
         <resourceLogoUrl>https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg</resourceLogoUrl>
       </gbif>
