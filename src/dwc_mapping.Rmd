@@ -195,7 +195,7 @@ multimedia <-
     `dc:type` = "StillImage",
     `dcterms:rights` = "CC-BY-4.0",
     CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-    captureDevice = NA_character_, # TODO: fill in
+    captureDevice = "CamAlien; camera module from Lucid Vision Labs with IMX545 global shutter sensor; https://doi.org/10.12688/f1000research.141992.2",
     resourceCreationTechnique = dplyr::if_else(
       .data$year == 2024,
       "Image captured as part of a fixed sampling rate",
