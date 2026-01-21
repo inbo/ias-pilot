@@ -40,8 +40,5 @@ rsconnect/
 src/*.html
 src/*.pdf
 
-# Raw files
-/data/raw
-
 # Mac OS X
 .DS_Store
