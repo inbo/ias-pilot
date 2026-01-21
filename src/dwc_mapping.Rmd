@@ -47,10 +47,6 @@ creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3L
 ### Prepare project-level (meta)data
 
 ```{r}
-project <-
-  project_raw |>
-  dplyr::select(term, value) |>
-  tidyr::pivot_wider(names_from = term, values_from = value)
 metadata <-
   metadata_raw |>
   dplyr::select(term, value) |>
