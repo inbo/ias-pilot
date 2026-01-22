@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="a4d4b24b-83d4-4d65-9ce6-b203e35bc99d" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="e67295cf-908a-4567-bb88-a04a6f74ad56" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -72,6 +72,9 @@
       <organizationName>Aarhus University</organizationName>
       <electronicMailAddress>tth@ecos.au.dk</electronicMailAddress>
       <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
+    </creator>
+    <creator>
+      <organizationName>Pl@ntNet</organizationName>
     </creator>
     <creator>
       <individualName>
