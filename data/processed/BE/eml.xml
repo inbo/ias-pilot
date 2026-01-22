@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="0e8c12d2-3ab7-4ddb-8daa-50ef221c70f6" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="a4d4b24b-83d4-4d65-9ce6-b203e35bc99d" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -131,7 +131,7 @@
       <para>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium) is an occurrence dataset published by the Research Institute for Nature and Forest (INBO). It is part of the Biodiversa+ monitoring pilot on Invasive Alien Species (2023-2027), that implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe. Specifically, the CamAlien camera system (Dyrmann et al. 2024) was mounted on a car to capture images of the roadside vegetation. Data have been standardized to Darwin Core. Issues with the dataset can be reported at https://github.com/inbo/ias-pilot/issues.</para>
       <para>Images from the cameras were processed with image recognition algorithms provided through Pl@ntNet (Espitalier et al. 2025). For the current dataset, only pre-selected species of regional importance were retained, and occurrences (images) with insufficient confidence were filtered out.</para>
       <para>We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</para>
-      <para>This dataset was published as open data for the IAS pilot project, funded by Biodiversa+, with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
+      <para>This dataset was published as open data for the IAS pilot project (funded by Biodiversa+) and the OneSTOP project (funded by Horizon Europe), with technical support provided by the Research Institute for Nature and Forest (INBO).</para>
     </abstract>
     <keywordSet>
       <keyword>Occurrence</keyword>
