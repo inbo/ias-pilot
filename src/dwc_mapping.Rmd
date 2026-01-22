@@ -165,7 +165,7 @@ occurrence <-
     ),
     identificationVerificationStatus = "not validated",
     identificationRemarks =
-      paste0("identified with ", .data$precision, "% precision"),
+      paste0("classified by a machine with ", .data$precision, "% precision"),
     taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
