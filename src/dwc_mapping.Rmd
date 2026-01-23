@@ -1,8 +1,7 @@
 ---
 title: "Darwin Core mapping"
-subtitle: "For: camALIEN"
-author:
-- Sanne Govaert
+subtitle: "For: CamAlien"
+author: Sanne Govaert
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -15,3 +14,404 @@ output:
 
 This script prepares data for publication on [GBIF](https://www.gbif.org/). The script transforms the raw data to a [Darwin Core Archive](https://www.gbif.org/darwin-core) that can be harvested by GBIF. It was developed for the [Biodiversa+ pilot on invasive alien species monitoring](https://www.biodiversa.eu/2024/02/02/pilot-on-invasive-alien-species-monitoring-first-year-report/) project.
 
+## Setup 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+### Load libraries
+
+```{r load libraries}
+library(here)
+library(dplyr)
+library(readr)
+library(tidyverse)
+library(stringr)
+```
+
+### Load data provided by Aarhus university
+
+```{r import data}
+file_location <- here::here("data", "raw", "camalien_belgium_export_20260120.csv")
+data <- readr::read_csv(file_location)
+```
+
+### Import project-level data
+
+```{r import google sheets}
+metadata_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=0&single=true&output=csv", show_col_types = FALSE)
+creators_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQzj3LUe1Tbd3UNf9OiFQeKBNKmNh4nB3Tb0m6tQVRWxE9r9CQZ0bZuVAdmaOIU4ciYQzeupbUA2oR7/pub?gid=1358621000&single=true&output=csv", show_col_types = FALSE)
+```
+
+### Prepare project-level (meta)data
+
+```{r}
+metadata <-
+  metadata_raw |>
+  dplyr::select(term, value) |>
+  tidyr::pivot_wider(names_from = term, values_from = value)
+creators <-
+  creators_raw |>
+  dplyr::arrange(order) |>
+  dplyr::mutate(title = paste(first_name, last_name))
+creators_list <- purrr::map(1:nrow(creators), function(i) {
+  list(
+    title = creators$title[i],
+    first_name = creators$first_name[i],
+    last_name = creators$last_name[i],
+    organization = creators$organization[i],
+    country = creators$country[i],
+    email = creators$email[i],
+    orcid = creators$orcid[i],
+    role = creators$project_personnel_role[i]
+  )
+})
+
+metadata_provider_names <-
+  creators |>
+  dplyr::filter(metadata_provider == TRUE) |>
+  dplyr::pull(title)
+metadata_provider <-
+  purrr::keep(creators_list, ~ .x$title %in% metadata_provider_names)
+
+contact_names <-
+  creators |>
+  dplyr::filter(contact == TRUE) |>
+  dplyr::pull(title)
+contact <- purrr::keep(creators_list, ~ .x$title %in% contact_names)
+
+project_personnel_names <-
+  creators |>
+  dplyr::filter(project_personnel == TRUE) |>
+  dplyr::pull(title)
+project_personnel <-
+  purrr::keep(creators_list, ~ .x$title %in% project_personnel_names)
+```
+
+### Prepare data
+
+```{r}
+data <-
+  data |>
+  dplyr::mutate(
+    date = format(as.Date(.data$timestamp, tz = "UTC"), "%Y%m%d"),
+    year = format(as.Date(.data$timestamp, tz = "UTC"), format = "%Y"),
+    deploymentID = paste(metadata$country_code, date, sep = "_"),
+    precision = dplyr::case_when(
+      .data$scientificname == "Ailanthus altissima" ~ 90.86,
+      .data$scientificname == "Baccharis halimifolia" ~ 75,
+      .data$scientificname == "Elaeagnus angustifolia" ~ 100,
+      .data$scientificname == "Impatiens glandulifera" ~ 97.32,
+      .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
+      .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
+      .data$scientificname == "Rosa rugosa" ~ 92.563
+    ),
+    coordinates = stringr::str_replace(.data$position, "POINT\\(", "") |>
+      stringr::str_replace("\\)", ""),
+    lon = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 1]),
+    lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
+  )
+```
+
+## Create Darwin Core
+
+### Create occurrence
+
+```{r occurrence}
+occurrence <-
+  data |>
+  dplyr::mutate(
+    .keep = "none",
+    type = "Image",
+    license = metadata$license_data,
+    rightsHolder = metadata$rights_holder,
+    datasetID = "",
+    datasetName = metadata$title,
+    basisOfRecord = "MachineObservation",
+    occurrenceID = .data$detectionsummaryid,
+    occurrenceStatus = "present",
+    eventID = .data$imagedataid,
+    parentEventID = .data$deploymentID,
+    eventType = "survey",
+    projectID = "IAS pilot",
+    eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    habitat = metadata$habitat,
+    samplingProtocol = "CamAlien, https://doi.org/10.12688/f1000research.141992.2",
+    countryCode = metadata$country_code,
+    minimumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
+    maximumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
+    decimalLatitude = .data$lat,
+    decimalLongitude = .data$lon,
+    geodeticDatum = "EPSG:4326", # WGS84
+    coordinateUncertaintyInMeters = 10,
+    identifiedBy = paste("Pl@ntNet", .data$plantnet_version),
+    dateIdentified = format(
+      .data$detection_timestamp,
+      format = "%Y-%m-%dT%H:%M:%SZ"
+    ),
+    identificationVerificationStatus = "not verified",
+    identificationRemarks =
+      paste0("classified by a machine with ", .data$precision, "% precision"),
+    taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificName = .data$scientificname,
+    kingdom = "Plantae"
+  ) |>
+  dplyr::select(
+    "type", "license", "rightsHolder", "datasetID",
+    "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
+    "eventID", "parentEventID", "eventType", "projectID", "eventDate",
+    "habitat", "samplingProtocol", "countryCode",
+    "minimumDistanceAboveSurfaceInMeters",
+    "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
+    "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
+    "identifiedBy", "dateIdentified", "identificationVerificationStatus",
+    "identificationRemarks", "taxonID", "scientificName", "kingdom"
+  )
+```
+
+### Create Audiovisual Media Description extension
+
+```{r multimedia}
+multimedia <-
+  data |>
+  dplyr::arrange(.data$timestamp) |>
+  dplyr::mutate(
+    .keep = "none",
+    occurrenceID = .data$detectionsummaryid,
+    identifier = .data$imagedataid,
+    `dc:type` = "StillImage",
+    `dcterms:rights` = "CC-BY-4.0",
+    CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
+    captureDevice = "CamAlien; camera module from Lucid Vision Labs with IMX545 global shutter sensor; https://doi.org/10.12688/f1000research.141992.2",
+    resourceCreationTechnique = dplyr::if_else(
+      .data$year == "2024",
+      "Image captured as part of a fixed sampling rate",
+      "Image captured as part of a vehicle speed dependent rate"
+    ),
+    accessURI = .data$url,
+    `dc:format` = dplyr::if_else(
+      tools::file_ext(.data$url) == "jpg", "image/jpeg", "image/tiff"
+    ),
+    serviceExpectation = "online"
+  ) |>
+  dplyr::select(
+    "occurrenceID", "identifier", "dc:type", "dcterms:rights", "CreateDate",
+    "captureDevice", "resourceCreationTechnique", "accessURI", "dc:format",
+    "serviceExpectation",
+  )
+```
+
+## Create metadata file (eml.xml)
+
+### Prepare metadata terms
+
+```{r}
+# Keywords
+keywords <- list(
+  list(
+    keywordThesaurus = paste(
+      "GBIF Dataset Type Vocabulary:",
+      "http://rs.gbif.org/vocabulary/gbif/dataset_type_2015-07-10.xml"
+    ),
+    keyword = "Occurrence"
+  ),
+  list(
+    keywordThesaurus = paste(
+      "GBIF Dataset Subtype Vocabulary:",
+      "http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml"
+    ),
+    keyword = "Observation"
+  ),
+  list(
+    keywordThesaurus = "n/a",
+    keyword = metadata$keywords
+  )
+)
+
+# Temporal coverage
+temporal_coverage <- list(
+  rangeOfDates = list(
+    beginDate = list(
+      calendarDate =
+        format(min(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+    ),
+    endDate = list(
+      calendarDate =
+        format(max(as.Date(occurrence$eventDate)), format = "%Y-%m-%d")
+    )
+  )
+)
+
+# Taxonomic coverage
+taxa <- data.frame(
+  scientificName = c(
+    "Ailanthus altissima",
+    "Baccharis halimifolia",
+    "Elaeagnus angustifolia",
+    "Impatiens glandulifera",
+    "Reynoutria sachalinensis",
+    "Robinia pseudoacacia",
+    "Rosa rugosa"
+  ),
+  taxonRank = "species"
+)
+taxonomic_coverage <-
+  list(
+    taxonomicClassification =
+      purrr::map(1:nrow(taxa), function(i) {
+        current_row <- taxa[i, ]
+        list(
+          taxonRankName = current_row$taxonRank,
+          taxonRankValue = current_row$scientificName
+        )
+      }),
+    generalTaxonomicCoverage = metadata$taxonomic_description
+  )
+
+# Methods
+method_steps <- na.omit(c(
+  metadata$step_1, metadata$step_2, metadata$step_3, metadata$step_4,
+  metadata$step_5, metadata$step_6, metadata$step_7
+))
+```
+
+### Functions to create contributors and project personnel for EML
+
+```{r create_eml_contributors function}
+create_eml_contributors <- function(contributor_list) {
+  purrr::map(contributor_list, ~ list(
+    individualName = list(
+      givenName = .$first_name,
+      surName = .$last_name
+    ),
+    organizationName = .$organization, # Discouraged by EML, but used by IPT
+    electronicMailAddress = .$email,
+    userId = if (!is.na(.$orcid)) {
+      list(directory = "https://orcid.org/", .$orcid)
+    } else {
+      NULL
+    }
+  ))
+}
+
+create_eml_personnel <- function(project_personnel) {
+  purrr::map(project_personnel, ~ list(
+    individualName = list(
+      givenName = .$first_name,
+      surName = .$last_name
+    ),
+    role = .$role,
+    userId = if (!is.na(.$orcid)) {
+      list(directory = "https://orcid.org/", .$orcid)
+    } else {
+      NULL
+    }
+  ))
+}
+```
+
+### Create EML
+
+```{r EML}
+eml <- list(
+  packageId = uuid::UUIDgenerate(),
+  system = "uuid",
+  dataset = list(
+    title = metadata$title,
+    abstract = list(
+      para = c(
+        metadata$description_paragraph1,
+        metadata$description_paragraph2,
+        metadata$description_paragraph3,
+        metadata$description_paragraph4
+      )
+    ),
+    maintenance = list(
+      description = list(para = ""), # Requires a description, even if empty
+      maintenanceUpdateFrequency = metadata$update_frequency
+    ),
+    creator = create_eml_contributors(creators_list),
+    contact = create_eml_contributors(contact),
+    metadataProvider = create_eml_contributors(metadata_provider),
+    keywordSet = keywords,
+    intellectualRights = list(para = metadata$license_data),
+    coverage = list(
+      geographicCoverage = list(
+        geographicDescription = metadata$geographic_description,
+        boundingCoordinates = list(
+          westBoundingCoordinate = min(occurrence$decimalLongitude),
+          southBoundingCoordinate = min(occurrence$decimalLatitude),
+          eastBoundingCoordinate = max(occurrence$decimalLongitude),
+          northBoundingCoordinate = max(occurrence$decimalLatitude)
+        )
+      ),
+      temporalCoverage = temporal_coverage,
+      taxonomicCoverage = taxonomic_coverage
+    ),
+    methods = list(
+      sampling = list(
+        samplingDescription = list(para = metadata$sampling_description),
+        studyExtent = list(description = list(para = metadata$study_extent))
+      ),
+      qualityControl = list(description = list(para = metadata$quality_control)),
+      methodStep = purrr::map(
+        method_steps, ~ list(description = list(para = .x))
+      )
+    ),
+    project = list(
+      title = "Monitoring Invasive Alien Species with image-based methods",
+      abstract = list(para = "Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe."),
+      funding = list(para = "Biodiversa+, the European Biodiversity Partnership supporting excellent research on biodiversity with an impact on policy and society. Biodiversa+ was jointly developed by BiodivERsA and the European Commission as part of the EU Biodiversity Strategy 2030."),
+      studyAreaDescription = list(
+        descriptor = list(
+          descriptorValue = "Europe",
+          name = "generic",
+          citableClassificationSystem = "false"
+        )
+      ),
+      designDescription = list(
+        description = list(para = "During several field seasons of the project, the CamAlien camera system (AI Lab, Denmark) was mounted on vehicles to capture images of the vegetation along linear transport infrastructure. Typically, this system was mounted on a car for the monitoring of roadside vegetation. The system was also tested on other types of vehicles (e.g., boats, trains). Plant species were then identified from the images using species recognition algorithms (Pl@ntNet). The focus was specifically on invasive alien plants, in the context of large-scale surveys, rapid detection, and support of species management. This pilot study was conducted in 11 countries across Europe.")
+      ),
+      personnel = create_eml_personnel(project_personnel)
+    )
+  ),
+  additionalMetadata = list(
+    metadata = list(
+      gbif = list(
+        hierarchyLevel = "dataset",
+        bibliography = list(
+          citation = list(
+            list(citation = metadata$bibliographic_citation_and_doi1),
+            list(citation = metadata$bibliographic_citation_and_doi2)
+          )
+        ),
+        resourceLogoUrl = "https://www.biodiversa.eu/wp-content/uploads/2022/03/biodiversa_logo.svg"
+      )
+    )
+  )
+)
+```
+
+## Write files
+
+```{r write files}
+dir_export <- here::here("data", "processed", metadata$country_code)
+if (!dir.exists(dir_export)) {
+  dir.create(dir_export, recursive = TRUE)
+}
+readr::write_csv(occurrence, file.path(dir_export, "occurrence.csv"), na = "")
+readr::write_csv(multimedia, file.path(dir_export, "multimedia.csv"), na = "")
+EML::write_eml(eml, file.path(dir_export, "eml.xml"))
+file.copy(
+  here::here("inst", "extdata", "meta.xml"), # Static meta.xml
+  file.path(dir_export, "meta.xml"),
+  overwrite = TRUE
+)
+```
+
+## Validate EML
+
+```{r}
+EML::eml_validate(file.path(dir_export, "eml.xml"))
+```

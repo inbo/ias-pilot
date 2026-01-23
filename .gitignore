@@ -42,3 +42,4 @@ src/*.pdf
 
 # Mac OS X
 .DS_Store
+data/raw/detectionsummary_belgium_20250416_sample.csv
