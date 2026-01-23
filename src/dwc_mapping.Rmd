@@ -357,7 +357,7 @@ eml <- list(
       )
     ),
     project = list(
-      title = "Biodiversa+ monitoring pilot on Invasive Alien Species (IAS)",
+      title = "Monitoring Invasive Alien Species with image-based methods",
       abstract = list(para = "Biodiversa+ monitoring pilots aim to facilitate the harmonisation of biodiversity monitoring at a transnational level, by testing common protocols and new technologies. The Biodiversa+ IAS pilot project (2023-2027) implemented the monitoring of invasive alien plants using a vehicle-mounted camera system in various countries across Europe."),
       funding = list(para = "Biodiversa+, the European Biodiversity Partnership supporting excellent research on biodiversity with an impact on policy and society. Biodiversa+ was jointly developed by BiodivERsA and the European Commission as part of the EU Biodiversity Strategy 2030."),
       studyAreaDescription = list(
