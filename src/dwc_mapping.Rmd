@@ -112,16 +112,6 @@ data <-
     lon = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 1]),
     lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
   )
-deployments <-
-  data |>
-  dplyr::group_by(deploymentID) |>
-  summarise(
-    deployment_start = min(.data$timestamp),
-    deployment_end = max(.data$timestamp)
-  )
-data <-
-  data |>
-  dplyr::left_join(deployments)
 ```
 
 ## Create Darwin Core
@@ -146,11 +136,6 @@ occurrence <-
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     habitat = metadata$habitat,
     samplingProtocol = "CamAlien, https://doi.org/10.12688/f1000research.141992.2",
-    samplingEffort = paste(
-      format(.data$deployment_start, format = "%Y-%m-%dT%H:%M:%SZ"),
-      format(.data$deployment_end, format = "%Y-%m-%dT%H:%M:%SZ"),
-      sep = "/"
-    ),
     countryCode = metadata$country_code,
     minimumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
     maximumDistanceAboveSurfaceInMeters = metadata$camera_height_m,
@@ -174,7 +159,7 @@ occurrence <-
     "type", "license", "rightsHolder", "datasetID",
     "datasetName", "basisOfRecord", "occurrenceID", "occurrenceStatus",
     "eventID", "parentEventID", "eventDate", "habitat", "samplingProtocol",
-    "samplingEffort", "countryCode", "minimumDistanceAboveSurfaceInMeters",
+    "countryCode", "minimumDistanceAboveSurfaceInMeters",
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
