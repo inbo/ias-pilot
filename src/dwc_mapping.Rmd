@@ -95,9 +95,9 @@ project_personnel <-
 data <-
   data |>
   dplyr::mutate(
-    timestamp_date = as.Date(.data$timestamp, tz = "UTC"),
-    year = format(.data$timestamp_date, format = "%Y"),
-    deploymentID = paste(metadata$country_code, timestamp_date, sep = "_"),
+    date = format(as.Date(.data$timestamp, tz = "UTC"), "%Y%m%d"),
+    year = format(as.Date(.data$timestamp, tz = "UTC"), format = "%Y"),
+    deploymentID = paste(metadata$country_code, date, sep = "_"),
     precision = dplyr::case_when(
       .data$scientificname == "Ailanthus altissima" ~ 90.86,
       .data$scientificname == "Baccharis halimifolia" ~ 75,
@@ -182,7 +182,7 @@ multimedia <-
     CreateDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     captureDevice = "CamAlien; camera module from Lucid Vision Labs with IMX545 global shutter sensor; https://doi.org/10.12688/f1000research.141992.2",
     resourceCreationTechnique = dplyr::if_else(
-      .data$year == 2024,
+      .data$year == "2024",
       "Image captured as part of a fixed sampling rate",
       "Image captured as part of a vehicle speed dependent rate"
     ),
