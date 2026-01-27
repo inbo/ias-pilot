@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="1be82f35-fe8a-480f-b41b-a4b06b1a1c07" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="4d7acd48-68a3-4a17-aea9-a7185da19530" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -187,18 +187,10 @@
         </rangeOfDates>
       </temporalCoverage>
       <taxonomicCoverage>
-        <generalTaxonomicCoverage>7 non-native species of vascular plants</generalTaxonomicCoverage>
+        <generalTaxonomicCoverage>5 non-native species of vascular plants</generalTaxonomicCoverage>
         <taxonomicClassification>
           <taxonRankName>species</taxonRankName>
           <taxonRankValue>Ailanthus altissima</taxonRankValue>
-        </taxonomicClassification>
-        <taxonomicClassification>
-          <taxonRankName>species</taxonRankName>
-          <taxonRankValue>Baccharis halimifolia</taxonRankValue>
-        </taxonomicClassification>
-        <taxonomicClassification>
-          <taxonRankName>species</taxonRankName>
-          <taxonRankValue>Elaeagnus angustifolia</taxonRankValue>
         </taxonomicClassification>
         <taxonomicClassification>
           <taxonRankName>species</taxonRankName>

@@ -91,6 +91,8 @@ project_personnel <-
 
 ### Prepare data
 
+#### Add columns
+
 ```{r}
 data <-
   data |>
@@ -113,6 +115,18 @@ data <-
     lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
   )
 ```
+
+#### Filter data for data quality
+
+```{r}
+data <-
+  data |>
+  dplyr::filter(
+    !(.data$scientificname %in% c("Baccharis halimifolia", "Elaeagnus angustifolia"))
+  )
+```
+
+
 
 ## Create Darwin Core
 
@@ -247,8 +261,6 @@ temporal_coverage <- list(
 taxa <- data.frame(
   scientificName = c(
     "Ailanthus altissima",
-    "Baccharis halimifolia",
-    "Elaeagnus angustifolia",
     "Impatiens glandulifera",
     "Reynoutria sachalinensis",
     "Robinia pseudoacacia",
