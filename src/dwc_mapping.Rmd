@@ -127,7 +127,7 @@ data <-
   dplyr::mutate(
     scientificname = dplyr::if_else(
       .data$scientificname == "Reynoutria sachalinensis",
-      "Reynoutria sp.",
+      "Reynoutria",
       .data$scientificname
       )
   )
