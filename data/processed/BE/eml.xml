@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="095165ba-dbe0-4530-a55e-aab7eeabf19a" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="1be82f35-fe8a-480f-b41b-a4b06b1a1c07" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -74,7 +74,22 @@
       <userId directory="https://orcid.org/">0000-0001-5387-3284</userId>
     </creator>
     <creator>
-      <organizationName>Pl@ntNet</organizationName>
+      <individualName>
+        <givenName>Pierre</givenName>
+        <surName>Bonnet</surName>
+      </individualName>
+      <organizationName>CIRAD, AMAP</organizationName>
+      <electronicMailAddress>pierre.bonnet@cirad.fr</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-2828-4389</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Alexis</givenName>
+        <surName>Joly</surName>
+      </individualName>
+      <organizationName>Inria</organizationName>
+      <electronicMailAddress>alexis.joly@inria.fr</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-2161-9940</userId>
     </creator>
     <creator>
       <individualName>
