@@ -116,13 +116,20 @@ data <-
   )
 ```
 
-#### Filter data for data quality
+#### Improve data quality
 
 ```{r}
 data <-
   data |>
   dplyr::filter(
     !(.data$scientificname %in% c("Baccharis halimifolia", "Elaeagnus angustifolia"))
+  ) |>
+  dplyr::mutate(
+    scientificname = dplyr::if_else(
+      .data$scientificname == "Reynoutria sachalinensis",
+      "Reynoutria sp.",
+      .data$scientificname
+      )
   )
 ```
 
@@ -262,11 +269,17 @@ taxa <- data.frame(
   scientificName = c(
     "Ailanthus altissima",
     "Impatiens glandulifera",
-    "Reynoutria sachalinensis",
+    "Reynoutria sp.",
     "Robinia pseudoacacia",
     "Rosa rugosa"
   ),
-  taxonRank = "species"
+  taxonRank = c(
+    "species",
+    "species",
+    "genus",
+    "species",
+    "species"
+  )
 )
 taxonomic_coverage <-
   list(
