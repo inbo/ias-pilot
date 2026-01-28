@@ -269,7 +269,7 @@ taxa <- data.frame(
   scientificName = c(
     "Ailanthus altissima",
     "Impatiens glandulifera",
-    "Reynoutria sp.",
+    "Reynoutria",
     "Robinia pseudoacacia",
     "Rosa rugosa"
   ),

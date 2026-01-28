@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="cb01d087-dd24-4b76-9434-73640b0384e9" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="e48693eb-76e8-4a5e-84a9-d20b65f2dd35" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -207,7 +207,7 @@
         </taxonomicClassification>
         <taxonomicClassification>
           <taxonRankName>genus</taxonRankName>
-          <taxonRankValue>Reynoutria sp.</taxonRankValue>
+          <taxonRankValue>Reynoutria</taxonRankValue>
         </taxonomicClassification>
         <taxonomicClassification>
           <taxonRankName>species</taxonRankName>
