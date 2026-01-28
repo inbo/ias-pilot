@@ -174,7 +174,7 @@ occurrence <-
     identificationVerificationStatus = "not verified",
     identificationRemarks =
       paste0("classified by a machine with ", .data$precision, "% precision"),
-    taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificNameID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
   ) |>
@@ -187,7 +187,7 @@ occurrence <-
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
-    "identificationRemarks", "taxonID", "scientificName", "kingdom"
+    "identificationRemarks", "scientificNameID", "scientificName", "kingdom"
   )
 ```
 
