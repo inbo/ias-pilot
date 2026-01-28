@@ -8,6 +8,12 @@ This repository contains the functionality to standardize the data of the [biodi
 
 [source data](data/raw) → Darwin Core [mapping script](src/dwc_mapping.Rmd) → generated [Darwin Core files](data/processed)
 
+## Datasets
+
+Title | Started | Ended | IPT | GBIF
+-- | -- | -- | -- | --
+IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium) | 2024 | active | [ias-pilot-be](https://ipt.inbo.be/resource?r=ias-pilot-be) | [DOI](https://doi.org/10.15468/wdp283)
+
 ## Repo structure
 
 The repository structure is based on [Cookiecutter Data Science](http://drivendata.github.io/cookiecutter-data-science/) and the [Checklist recipe](https://github.com/trias-project/checklist-recipe). Files and directories indicated with `GENERATED` should not be edited manually.
