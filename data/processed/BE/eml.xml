@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="4e0cceaa-a7d1-4ca8-8aab-65b06ec5ade1" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="cb01d087-dd24-4b76-9434-73640b0384e9" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
   <dataset>
     <title>IAS pilot - Observations of alien plant species using a vehicle-mounted camera system in Flanders (Belgium)</title>
     <creator>
@@ -90,6 +90,15 @@
       <organizationName>Inria</organizationName>
       <electronicMailAddress>alexis.joly@inria.fr</electronicMailAddress>
       <userId directory="https://orcid.org/">0000-0002-2161-9940</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Peter</givenName>
+        <surName>Desmet</surName>
+      </individualName>
+      <organizationName>Research Institute for Nature and Forest (INBO)</organizationName>
+      <electronicMailAddress>peter.desmet@inbo.be</electronicMailAddress>
+      <userId directory="https://orcid.org/">0000-0002-8442-8025</userId>
     </creator>
     <creator>
       <individualName>
@@ -187,7 +196,7 @@
         </rangeOfDates>
       </temporalCoverage>
       <taxonomicCoverage>
-        <generalTaxonomicCoverage>6 non-native species of vascular plants</generalTaxonomicCoverage>
+        <generalTaxonomicCoverage>5 non-native species of vascular plants</generalTaxonomicCoverage>
         <taxonomicClassification>
           <taxonRankName>species</taxonRankName>
           <taxonRankValue>Ailanthus altissima</taxonRankValue>
