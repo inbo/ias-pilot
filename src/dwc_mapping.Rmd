@@ -101,13 +101,11 @@ data <-
     year = format(as.Date(.data$timestamp, tz = "UTC"), format = "%Y"),
     deploymentID = paste(metadata$country_code, date, sep = "_"),
     precision = dplyr::case_when(
-      .data$scientificname == "Ailanthus altissima" ~ 90.86,
-      .data$scientificname == "Baccharis halimifolia" ~ 75,
-      .data$scientificname == "Elaeagnus angustifolia" ~ 100,
-      .data$scientificname == "Impatiens glandulifera" ~ 97.32,
-      .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
-      .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
-      .data$scientificname == "Rosa rugosa" ~ 92.563
+      .data$scientificname == "Ailanthus altissima" ~ 90.97,
+      .data$scientificname == "Impatiens glandulifera" ~ 98.79,
+      .data$scientificname == "Reynoutria sachalinensis" ~ 85.54,
+      .data$scientificname == "Robinia pseudoacacia" ~ 96.47,
+      .data$scientificname == "Rosa rugosa" ~ 93.41
     )
   )
 ```
