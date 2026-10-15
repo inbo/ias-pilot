@@ -33,7 +33,7 @@ library(stringr)
 ### Load data provided by Aarhus university
 
 ```{r import data}
-file_location <- here::here("data", "raw", "camalien_belgium_export_20260120.csv")
+file_location <- here::here("data", "raw", "camalien-export-belgium_v3.csv")
 data <- readr::read_csv(file_location)
 ```
 
@@ -108,11 +108,7 @@ data <-
       .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
       .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
       .data$scientificname == "Rosa rugosa" ~ 92.563
-    ),
-    coordinates = stringr::str_replace(.data$position, "POINT\\(", "") |>
-      stringr::str_replace("\\)", ""),
-    lon = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 1]),
-    lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
+    )
   )
 ```
 
