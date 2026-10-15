@@ -28,6 +28,7 @@ library(dplyr)
 library(readr)
 library(tidyverse)
 library(stringr)
+library(rcol)
 ```
 
 ### Load data provided by Aarhus university
@@ -110,6 +111,23 @@ data <-
   )
 ```
 
+#### Match scientific name with Catalogue of Life (COL) ID
+
+```{r}
+col_ids <-
+  unique(data$scientificname) |>
+  rcol::clb_match_checklist() |>
+  dplyr::rename(
+    scientificname = .data$verbatim_name,
+    col_id = .data$usage_id
+  ) |>
+  dplyr::select("scientificname", "col_id")
+
+data <- 
+  data |>
+  dplyr::left_join(col_ids, by = dplyr::join_by("scientificname"))
+```
+
 #### Improve data quality
 
 ```{r}
@@ -126,7 +144,6 @@ data <-
       )
   )
 ```
-
 
 
 ## Create Darwin Core
@@ -168,7 +185,7 @@ occurrence <-
     identificationVerificationStatus = "not verified",
     identificationRemarks =
       paste0("classified by a machine with ", .data$precision, "% precision"),
-    scientificNameID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificNameID = paste0("col:", .data$col_id),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
   ) |>
