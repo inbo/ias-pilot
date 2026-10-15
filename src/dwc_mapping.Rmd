@@ -28,12 +28,13 @@ library(dplyr)
 library(readr)
 library(tidyverse)
 library(stringr)
+library(rcol)
 ```
 
 ### Load data provided by Aarhus university
 
 ```{r import data}
-file_location <- here::here("data", "raw", "camalien_belgium_export_20260120.csv")
+file_location <- here::here("data", "raw", "camalien-export-belgium_v3.csv")
 data <- readr::read_csv(file_location)
 ```
 
@@ -101,19 +102,30 @@ data <-
     year = format(as.Date(.data$timestamp, tz = "UTC"), format = "%Y"),
     deploymentID = paste(metadata$country_code, date, sep = "_"),
     precision = dplyr::case_when(
-      .data$scientificname == "Ailanthus altissima" ~ 90.86,
-      .data$scientificname == "Baccharis halimifolia" ~ 75,
-      .data$scientificname == "Elaeagnus angustifolia" ~ 100,
-      .data$scientificname == "Impatiens glandulifera" ~ 97.32,
-      .data$scientificname == "Reynoutria sachalinensis" ~ 89.66,
-      .data$scientificname == "Robinia pseudoacacia" ~ 97.31,
-      .data$scientificname == "Rosa rugosa" ~ 92.563
-    ),
-    coordinates = stringr::str_replace(.data$position, "POINT\\(", "") |>
-      stringr::str_replace("\\)", ""),
-    lon = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 1]),
-    lat = as.numeric(stringr::str_split_fixed(.data$coordinates, " ", 2)[, 2])
+      .data$scientificname == "Ailanthus altissima" ~ 90.97,
+      .data$scientificname == "Impatiens glandulifera" ~ 98.79,
+      .data$scientificname == "Reynoutria sachalinensis" ~ 85.54,
+      .data$scientificname == "Robinia pseudoacacia" ~ 96.47,
+      .data$scientificname == "Rosa rugosa" ~ 93.41
+    )
   )
+```
+
+#### Match scientific name with Catalogue of Life (COL) ID
+
+```{r}
+col_ids <-
+  unique(data$scientificname) |>
+  rcol::clb_match_checklist() |>
+  dplyr::rename(
+    scientificname = .data$verbatim_name,
+    col_id = .data$usage_id
+  ) |>
+  dplyr::select("scientificname", "col_id")
+
+data <- 
+  data |>
+  dplyr::left_join(col_ids, by = dplyr::join_by("scientificname"))
 ```
 
 #### Improve data quality
@@ -132,7 +144,6 @@ data <-
       )
   )
 ```
-
 
 
 ## Create Darwin Core
@@ -174,7 +185,7 @@ occurrence <-
     identificationVerificationStatus = "not verified",
     identificationRemarks =
       paste0("classified by a machine with ", .data$precision, "% precision"),
-    scientificNameID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificNameID = paste0("col:", .data$col_id),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
   ) |>
