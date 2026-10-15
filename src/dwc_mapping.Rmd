@@ -91,6 +91,8 @@ project_personnel <-
 
 ### Prepare data
 
+#### Add columns
+
 ```{r}
 data <-
   data |>
@@ -114,6 +116,25 @@ data <-
   )
 ```
 
+#### Improve data quality
+
+```{r}
+data <-
+  data |>
+  dplyr::filter(
+    !(.data$scientificname %in% c("Baccharis halimifolia", "Elaeagnus angustifolia"))
+  ) |>
+  dplyr::mutate(
+    scientificname = dplyr::if_else(
+      .data$scientificname == "Reynoutria sachalinensis",
+      "Reynoutria",
+      .data$scientificname
+      )
+  )
+```
+
+
+
 ## Create Darwin Core
 
 ### Create occurrence
@@ -126,7 +147,7 @@ occurrence <-
     type = "Image",
     license = metadata$license_data,
     rightsHolder = metadata$rights_holder,
-    datasetID = "",
+    datasetID = "https://doi.org/10.15468/wdp283",
     datasetName = metadata$title,
     basisOfRecord = "MachineObservation",
     occurrenceID = .data$detectionsummaryid,
@@ -153,7 +174,7 @@ occurrence <-
     identificationVerificationStatus = "not verified",
     identificationRemarks =
       paste0("classified by a machine with ", .data$precision, "% precision"),
-    taxonID = paste0("https://www.gbif.org/species/", .data$gbifid),
+    scientificNameID = paste0("https://www.gbif.org/species/", .data$gbifid),
     scientificName = .data$scientificname,
     kingdom = "Plantae"
   ) |>
@@ -166,7 +187,7 @@ occurrence <-
     "maximumDistanceAboveSurfaceInMeters", "decimalLatitude",
     "decimalLongitude", "geodeticDatum", "coordinateUncertaintyInMeters",
     "identifiedBy", "dateIdentified", "identificationVerificationStatus",
-    "identificationRemarks", "taxonID", "scientificName", "kingdom"
+    "identificationRemarks", "scientificNameID", "scientificName", "kingdom"
   )
 ```
 
@@ -247,14 +268,18 @@ temporal_coverage <- list(
 taxa <- data.frame(
   scientificName = c(
     "Ailanthus altissima",
-    "Baccharis halimifolia",
-    "Elaeagnus angustifolia",
     "Impatiens glandulifera",
-    "Reynoutria sachalinensis",
+    "Reynoutria",
     "Robinia pseudoacacia",
     "Rosa rugosa"
   ),
-  taxonRank = "species"
+  taxonRank = c(
+    "species",
+    "species",
+    "genus",
+    "species",
+    "species"
+  )
 )
 taxonomic_coverage <-
   list(

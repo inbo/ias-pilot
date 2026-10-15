@@ -30,7 +30,7 @@
     <field index="24" term="http://rs.tdwg.org/dwc/terms/dateIdentified"/>
     <field index="25" term="http://rs.tdwg.org/dwc/terms/identificationVerificationStatus"/>
     <field index="26" term="http://rs.tdwg.org/dwc/terms/identificationRemarks"/>
-    <field index="27" term="http://rs.tdwg.org/dwc/terms/taxonID"/>
+    <field index="27" term="http://rs.tdwg.org/dwc/terms/scientificNameID"/>
     <field index="28" term="http://rs.tdwg.org/dwc/terms/scientificName"/>
     <field index="29" term="http://rs.tdwg.org/dwc/terms/kingdom"/>
   </core>
